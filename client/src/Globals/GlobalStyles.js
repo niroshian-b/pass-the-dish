@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import './fonts.css';
 
 export default createGlobalStyle`
 :root {
@@ -35,6 +36,7 @@ html, body, div, span, applet, object, iframe,
 *:after {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
+  font-family: 'Alegreya Sans SC', sans-serif;
 }
 
 `;

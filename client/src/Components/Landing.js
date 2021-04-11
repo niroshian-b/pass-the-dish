@@ -49,7 +49,7 @@ const Wrapper = styled.div`
 	background-repeat: no-repeat;
 	backface-visibility: none;
 
-	animation: ${BGfade} 30s linear infinite 0s;
+	animation: ${BGfade} 45s linear infinite 0s;
 	animation-timing-function: ease-in-out;
 
 	display: flex;
