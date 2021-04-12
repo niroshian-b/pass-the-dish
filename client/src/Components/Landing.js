@@ -1,13 +1,35 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled, { keyframes } from 'styled-components';
 
 import Button from './Button';
+import Modal from './Modal';
+
+import { CurrentUserContext } from '../Contexts/UserContext';
 
 const Landing = () => {
+	const { showModal, setShowModal } = useContext(CurrentUserContext);
 	return (
 		<Wrapper>
-			<Button>Register</Button>
-			<Button>Log In</Button>
+			{!showModal ? (
+				<>
+					<Button
+						onClick={() => {
+							setShowModal('register');
+						}}
+					>
+						Register{' '}
+					</Button>
+					<Button
+						onClick={() => {
+							setShowModal('login');
+						}}
+					>
+						Login
+					</Button>
+				</>
+			) : (
+				<Modal activeButton={showModal} />
+			)}
 		</Wrapper>
 	);
 };
@@ -40,8 +62,8 @@ const BGfade = keyframes`
 `;
 
 const Wrapper = styled.div`
-	width: 100vw;
-	height: 100vh;
+	width: 100%;
+	height: calc(100vh - 75px);
 
 	background-image: url('../../assets/landingImages/4-by-jakub-kapusnak.jpg');
 	background-position: center center;

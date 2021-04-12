@@ -39,4 +39,22 @@ html, body, div, span, applet, object, iframe,
   font-family: 'Alegreya Sans SC', sans-serif;
 }
 
+h1,
+h2 {
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
+h1 {
+  border-bottom: 1px solid var(--primary-color);
+  font-size: 32px;
+  padding-bottom: 12px;
+}
+
+h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+
 `;
