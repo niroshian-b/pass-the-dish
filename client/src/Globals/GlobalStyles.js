@@ -5,6 +5,7 @@ export default createGlobalStyle`
 :root {
       --primary-color: #A11212;
       --secondary-color: #fff;
+      --heading-font: 'Alegreya Sans SC', sans-serif;
     }
 html, body, div, span, applet, object, iframe,
   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -36,7 +37,10 @@ html, body, div, span, applet, object, iframe,
 *:after {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
-  font-family: 'Alegreya Sans SC', sans-serif;
+}
+
+h1, h2, h3, h4, button, label{
+	font-family: var(--heading-font);
 }
 
 h1,

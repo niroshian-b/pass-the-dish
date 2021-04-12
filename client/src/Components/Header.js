@@ -33,6 +33,7 @@ const Container = styled.div`
 `;
 
 const SiteName = styled(Container)`
+	font-family: var(--heading-font);
 	&:hover {
 		cursor: pointer;
 	}

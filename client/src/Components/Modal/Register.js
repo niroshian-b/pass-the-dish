@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import SubmitButton from './SubmitButton';
+
 const Register = () => {
 	return (
 		<Wrapper>
-			<h1>Register</h1>
 			<form>
 				<PersonalInfo>
 					<h2>Personal Information</h2>
@@ -34,17 +35,17 @@ const Register = () => {
 							id="email"
 							name="email"
 							type="text"
-							placeholder="Your "
+							placeholder="Your email"
 						/>
 					</FormItem>
 				</PersonalInfo>
 				<Experience>
-					<h2>What level of cook are you?</h2>
+					<h2>What Level of Cook are You?</h2>
 					<div>
 						<label>
 							<input
 								type="radio"
-								name="amateur"
+								name="experience"
 								value="amateur"
 							/>
 							Amateur
@@ -52,7 +53,7 @@ const Register = () => {
 						<label>
 							<input
 								type="radio"
-								name="homeCook"
+								name="experience"
 								value="homeCook"
 							/>
 							Home Cook
@@ -60,26 +61,26 @@ const Register = () => {
 						<label>
 							<input
 								type="radio"
-								name="culinaryProfessional"
+								name="experience"
 								value="culinaryProfessional"
 							/>
 							Culinary Professional
 						</label>
 					</div>
 				</Experience>
+				<SubmitButton buttonText={'Register'} />
 			</form>
 		</Wrapper>
 	);
 };
 
 const Wrapper = styled.div`
-	box-shadow: 0 0 30px 15px rgba(44, 26, 8, 0.263);
-	max-width: 1000px;
-	display: flex;
-	position: relative;
-	z-index: 2;
+	width: 100%;
+	height: 100%;
 `;
-const Section = styled.div``;
+const Section = styled.div`
+	padding: 10px;
+`;
 const PersonalInfo = styled(Section)``;
 const Experience = styled(Section)``;
 const Name = styled.div``;

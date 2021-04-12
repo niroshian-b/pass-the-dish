@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 
 import { CurrentUserContext } from '../../Contexts/UserContext';
@@ -8,9 +8,28 @@ import Login from './Login';
 const Modal = () => {
 	const { showModal, setShowModal } = useContext(CurrentUserContext);
 
+	//function handles closing the modal when escape is pressed
+	const escapeModal = (e) => {
+		if ((e.charCode || e.keyCode) === 27) {
+			setShowModal(null);
+		}
+	};
+
+	useEffect(() => {
+		document.body.addEventListener('keydown', escapeModal);
+
+		return () => {
+			document.body.removeEventListener('keydown', escapeModal);
+		};
+	});
+
 	return (
-		<Wrapper>
-			<Content>
+		<Wrapper onClick={() => setShowModal(null)}>
+			<Content
+				onClick={(e) => {
+					e.stopPropagation();
+				}}
+			>
 				<Header>
 					<Button
 						active={showModal === 'register'}
@@ -29,9 +48,6 @@ const Modal = () => {
 					{showModal === 'login' && <Login />}
 					{showModal === 'register' && <Register />}
 				</Body>
-				<Footer>
-					<button onClick={() => setShowModal(null)}>Close</button>
-				</Footer>
 			</Content>
 		</Wrapper>
 	);
@@ -71,8 +87,13 @@ const Button = styled.button`
   `};
 `;
 const Body = styled.div`
-	padding: 10px;
-	border-top: 1px solid #eee;
+	max-width: 1000px;
+	min-height: 200px;
+	padding: 20px;
+	display: flex;
+	flex-wrap: wrap;
+	position: relative;
+	z-index: 2;
 `;
 const Footer = styled.div``;
 

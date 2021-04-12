@@ -1,33 +1,36 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import SubmitButton from './SubmitButton';
+
 const Login = () => {
 	return (
-		<>
-			<Label htmlFor="email">Email: </Label>
-			<input type="text" name="email" placeholder="email" />
-			<Label htmlFor="password">Password: </Label>
-			<input type="password" name="password" placeholder="Password" />
-			<Submit type="submit">Login</Submit>
-		</>
+		<Wrapper>
+			<InputFields>
+				<Label htmlFor="email">Email: </Label>
+				<Input type="text" name="email" placeholder="email" />
+				<Label htmlFor="password">Password: </Label>
+				<Input type="password" name="password" placeholder="Password" />
+			</InputFields>
+			<SubmitButton buttonText={'Login'} />
+		</Wrapper>
 	);
 };
 
+const Wrapper = styled.div`
+	width: 100%;
+	height: 100%;
+`;
+const InputFields = styled.div`
+	display: flex;
+	flex-direction: column;
+`;
 const Label = styled.label`
-	margin-left: 15px;
-`;
-
-const Submit = styled.button`
-	margin-left: 15px;
-	background-color: var(--secondary-color);
 	color: var(--primary-color);
-	border: solid 3px transparent;
-	border-radius: 4px;
-
-	&:hover {
-		background-color: var(--primary-color);
-		color: var(--secondary-color);
-		border: solid 3px var(--secondary-color);
-	}
+	font-size: 20px;
+	margin-top: 10px;
 `;
+
+const Input = styled.input``;
+
 export default Login;
