@@ -24,11 +24,13 @@ const Wrapper = styled.div`
 const InputFields = styled.div`
 	display: flex;
 	flex-direction: column;
+	padding: 0.625em;
 `;
 const Label = styled.label`
 	color: var(--primary-color);
 	font-size: 1.25rem;
-	margin-top: 10px;
+	font-weight: bold;
+	margin-top: 0.625em;
 `;
 
 const Input = styled.input`
