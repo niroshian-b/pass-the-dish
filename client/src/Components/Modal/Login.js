@@ -8,7 +8,7 @@ const Login = () => {
 		<Wrapper>
 			<InputFields>
 				<Label htmlFor="email">Email: </Label>
-				<Input type="text" name="email" placeholder="email" />
+				<Input type="text" name="email" placeholder="Email" />
 				<Label htmlFor="password">Password: </Label>
 				<Input type="password" name="password" placeholder="Password" />
 			</InputFields>
@@ -27,10 +27,13 @@ const InputFields = styled.div`
 `;
 const Label = styled.label`
 	color: var(--primary-color);
-	font-size: 20px;
+	font-size: 1.25rem;
 	margin-top: 10px;
 `;
 
-const Input = styled.input``;
+const Input = styled.input`
+	padding: 0.25em 0.75em;
+	margin: 0.25em 0;
+`;
 
 export default Login;

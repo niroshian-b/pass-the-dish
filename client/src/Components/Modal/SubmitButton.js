@@ -15,15 +15,15 @@ const Submit = styled.div`
 	align-items: flex-end;
 `;
 const Button = styled.button`
-	background-color: var(--secondary-color);
-	color: var(--primary-color);
-	border: solid 3px transparent;
+	background-color: var(--primary-color);
+	color: var(--secondary-color);
+	border: solid 1px var(--primary-color);
 	border-radius: 4px;
 
 	&:hover {
-		background-color: var(--primary-color);
-		color: var(--secondary-color);
-		border: solid 3px var(--secondary-color);
+		background-color: var(--secondary-color);
+		color: var(--primary-color);
+		border: solid 1px var(--primary-color);
 	}
 `;
 export default SubmitButton;

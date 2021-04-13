@@ -17,7 +17,7 @@ const Header = () => {
 };
 
 const Wrapper = styled.div`
-	height: 75px;
+	min-height: 75px;
 	width: 100%;
 
 	background-color: var(--primary-color);
@@ -28,7 +28,7 @@ const Wrapper = styled.div`
 `;
 
 const Container = styled.div`
-	font-size: 30px;
+	font-size: 1.875rem;
 	margin: 10px 30px;
 `;
 

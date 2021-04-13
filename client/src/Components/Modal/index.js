@@ -72,8 +72,8 @@ const Header = styled.div``;
 
 const Button = styled.button`
 	width: 50%;
-	padding: 20px;
-	font-size: 20px;
+	padding: 1.25em;
+	font-size: 1.25rem;
 	font-weight: bold;
 	color: var(--primary-color);
 	background-color: var(--secondary-color);
@@ -89,7 +89,7 @@ const Button = styled.button`
 const Body = styled.div`
 	max-width: 1000px;
 	min-height: 200px;
-	padding: 20px;
+	padding: 1.25em;
 	display: flex;
 	flex-wrap: wrap;
 	position: relative;

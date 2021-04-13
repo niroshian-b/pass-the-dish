@@ -9,39 +9,41 @@ const Register = () => {
 			<form>
 				<PersonalInfo>
 					<h2>Personal Information</h2>
-					<Name>
-						<FormItem>
+					<TextGroup>
+						<div>
 							<label for="firstName">First Name</label>
-							<input
+							<Input
 								id="firstName"
 								name="firstName"
 								type="text"
 								placeholder="Your first name"
 							/>
-						</FormItem>
-						<FormItem>
+						</div>
+						<div>
 							<label for="lastName">Last Name</label>
-							<input
+							<Input
 								id="lastName"
 								name="lastName"
 								type="text"
 								placeholder="Your last name"
 							/>
-						</FormItem>
-					</Name>
-					<FormItem>
-						<label for="email">Email</label>
-						<input
-							id="email"
-							name="email"
-							type="text"
-							placeholder="Your email"
-						/>
-					</FormItem>
+						</div>
+					</TextGroup>
+					<TextGroup>
+						<Email>
+							<label for="email">Email</label>
+							<EmailInput
+								id="email"
+								name="email"
+								type="text"
+								placeholder="Your email"
+							/>
+						</Email>
+					</TextGroup>
 				</PersonalInfo>
-				<Experience>
+				<Section>
 					<h2>What Level of Cook are You?</h2>
-					<div>
+					<Experience>
 						<label>
 							<input
 								type="radio"
@@ -66,8 +68,8 @@ const Register = () => {
 							/>
 							Culinary Professional
 						</label>
-					</div>
-				</Experience>
+					</Experience>
+				</Section>
 				<SubmitButton buttonText={'Register'} />
 			</form>
 		</Wrapper>
@@ -79,11 +81,31 @@ const Wrapper = styled.div`
 	height: 100%;
 `;
 const Section = styled.div`
-	padding: 10px;
+	padding: 0.625em;
 `;
 const PersonalInfo = styled(Section)``;
-const Experience = styled(Section)``;
-const Name = styled.div``;
-const FormItem = styled.div``;
+
+const Experience = styled.div`
+	display: flex;
+	justify-content: space-around;
+`;
+
+const TextGroup = styled.div`
+	display: flex;
+	justify-content: space-between;
+`;
+
+const Input = styled.input`
+	padding: 0.25em 0.75em;
+	margin: 0.25em 0;
+`;
+
+const Email = styled.div`
+	width: 100%;
+`;
+
+const EmailInput = styled(Input)`
+	width: calc(100% - 1.75em);
+`;
 
 export default Register;

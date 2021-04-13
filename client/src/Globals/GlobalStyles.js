@@ -51,12 +51,12 @@ h2 {
 
 h1 {
   border-bottom: 1px solid var(--primary-color);
-  font-size: 32px;
-  padding-bottom: 12px;
+  font-size: 2rem;
+  padding-bottom: 0.75em;
 }
 
 h2 {
-  font-size: 20px;
+  font-size: 1.25rem;
   margin-bottom: 10px;
 }
 

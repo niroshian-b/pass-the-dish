@@ -3,9 +3,8 @@ import styled from 'styled-components';
 const Button = styled.button`
 	margin: 10px;
 
-	height: 10%;
+	min-height: 60px;
 	min-width: 200px;
-	max-height: 60px;
 
 	background-color: var(--primary-color);
 	color: var(--secondary-color);
@@ -14,7 +13,7 @@ const Button = styled.button`
 	border: 3px solid transparent;
 	border-radius: 15px;
 
-	font-size: 25px;
+	font-size: 1.625rem;
 	font-weight: bold;
 
 	&:hover {
