@@ -1,13 +1,24 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 
-import Button from './Button';
-import Modal from './Modal';
-
+import { useAuth } from '../Contexts/AuthContext';
 import { ModalContext } from '../Contexts/ModalContext';
 
+import { useHistory } from 'react-router-dom';
+
+import Modal from './Modal';
+
 const Landing = () => {
+	const history = useHistory();
+	const { currentUser } = useAuth();
 	const { showModal, setShowModal } = useContext(ModalContext);
+
+	useEffect(() => {
+		if (currentUser) {
+			history.push('/home');
+		}
+	}, [currentUser]);
+
 	return (
 		<Wrapper>
 			{!showModal ? (
@@ -77,6 +88,30 @@ const Wrapper = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
+`;
+
+const Button = styled.button`
+	margin: 10px;
+
+	min-height: 60px;
+	min-width: 200px;
+
+	background-color: var(--primary-color);
+	color: var(--secondary-color);
+	box-shadow: 2px 3px 5px black;
+
+	border: 3px solid transparent;
+	border-radius: 9px;
+
+	font-size: 1.625rem;
+	font-weight: bold;
+
+	&:hover {
+		background-color: var(--secondary-color);
+		color: var(--primary-color);
+		border: 3px solid var(--primary-color);
+		cursor: pointer;
+	}
 `;
 
 export default Landing;
