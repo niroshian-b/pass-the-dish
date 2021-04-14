@@ -1,77 +1,140 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import SubmitButton from './SubmitButton';
 
+import { useAuth } from '../../Contexts/AuthContext';
+
 const Register = () => {
+	const emailRef = useRef();
+	const passwordRef = useRef();
+	const passwordConfirmRef = useRef();
+	const { handleSignUp } = useAuth();
+
+	const [error, setError] = useState();
+	const [loading, setLoading] = useState();
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+
+		if (passwordRef.current.value !== passwordConfirmRef.current.value) {
+			return setError('Passwords do not match');
+		}
+		if (passwordRef.current.value.length < 6) {
+			return setError(
+				'Password is weak. It must be 6 characters or longer'
+			);
+		}
+		try {
+			setError('');
+			setLoading(true);
+			await handleSignUp(
+				emailRef.current.value,
+				passwordRef.current.value
+			);
+		} catch {
+			setError('Failed to create an account');
+		}
+		setLoading(false);
+	};
+
 	return (
 		<Wrapper>
-			<form>
-				<PersonalInfo>
-					<h2>Personal Information</h2>
-					<TextGroup>
-						<div>
-							<label for="firstName">First Name</label>
-							<Input
-								id="firstName"
-								name="firstName"
-								type="text"
-								placeholder="Your first name"
-							/>
-						</div>
-						<div>
-							<label for="lastName">Last Name</label>
-							<Input
-								id="lastName"
-								name="lastName"
-								type="text"
-								placeholder="Your last name"
-							/>
-						</div>
-					</TextGroup>
-					<TextGroup>
-						<Email>
-							<label for="email">Email</label>
-							<EmailInput
-								id="email"
-								name="email"
-								type="text"
-								placeholder="Your email"
-							/>
-						</Email>
-					</TextGroup>
-				</PersonalInfo>
-				<Section>
-					<h2>What Level of Cook are You?</h2>
-					<Experience>
-						<label>
-							<input
-								type="radio"
-								name="experience"
-								value="amateur"
-							/>
-							Amateur
-						</label>
-						<label>
-							<input
-								type="radio"
-								name="experience"
-								value="homeCook"
-							/>
-							Home Cook
-						</label>
-						<label>
-							<input
-								type="radio"
-								name="experience"
-								value="culinaryProfessional"
-							/>
-							Culinary Professional
-						</label>
-					</Experience>
-				</Section>
-				<SubmitButton buttonText={'Register'} />
-			</form>
+			<Form onSubmit={handleSubmit}>
+				{error && <p>{error}</p>}
+				<H2>Login</H2>
+				<TextGroup>
+					<Email>
+						<label htmlFor="email">Email</label>
+						<EmailInput
+							id="email"
+							name="email"
+							type="text"
+							placeholder="Your email"
+							ref={emailRef}
+							required
+						/>
+					</Email>
+				</TextGroup>
+				<TextGroup>
+					<div>
+						<label htmlFor="password">Password</label>
+						<Input
+							id="password"
+							name="password"
+							type="password"
+							placeholder="Your password"
+							ref={passwordRef}
+							required
+						/>
+					</div>
+					<div>
+						<label htmlFor="confirmPassword">Confirm</label>
+						<Input
+							id="confirmPassword"
+							name="confirmPassword"
+							type="password"
+							placeholder="Confirm password"
+							ref={passwordConfirmRef}
+							required
+						/>
+					</div>
+				</TextGroup>
+				<H2>Personal Information</H2>
+				<TextGroup>
+					<div>
+						<label htmlFor="firstName">First Name</label>
+						<Input
+							id="firstName"
+							name="firstName"
+							type="text"
+							placeholder="Your first name"
+							required
+						/>
+					</div>
+					<div>
+						<label htmlFor="lastName">Last Name</label>
+						<Input
+							id="lastName"
+							name="lastName"
+							type="text"
+							placeholder="Your last name"
+							required
+						/>
+					</div>
+				</TextGroup>
+				<H2>What Level of Cook are You?</H2>
+				<Experience>
+					<label>
+						<input
+							type="radio"
+							name="experience"
+							value="amateur"
+							required
+						/>
+						Amateur
+					</label>
+					<label>
+						<input
+							type="radio"
+							name="experience"
+							value="homeCook"
+							required
+						/>
+						Home Cook
+					</label>
+					<label>
+						<input
+							type="radio"
+							name="experience"
+							value="culinaryPro"
+							required
+						/>
+						Culinary Professional
+					</label>
+				</Experience>
+				<SubmitButton disabled={loading} buttonText={'Register'} />
+			</Form>
 		</Wrapper>
 	);
 };
@@ -80,11 +143,12 @@ const Wrapper = styled.div`
 	width: 100%;
 	height: 100%;
 `;
-const Section = styled.div`
-	padding: 0.625em;
+const Form = styled.form`
+	padding: 0.25em;
 `;
-const PersonalInfo = styled(Section)``;
-
+const H2 = styled.h2`
+	margin-top: 1rem;
+`;
 const Experience = styled.div`
 	display: flex;
 	justify-content: space-around;
@@ -97,7 +161,7 @@ const TextGroup = styled.div`
 
 const Input = styled.input`
 	padding: 0.25em 0.75em;
-	margin: 0.25em 0;
+	margin: 0.125em 0;
 `;
 
 const Email = styled.div`

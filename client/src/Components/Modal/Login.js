@@ -1,18 +1,61 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import SubmitButton from './SubmitButton';
 
+import { useAuth } from '../../Contexts/AuthContext';
+
 const Login = () => {
+	const emailRef = useRef();
+	const passwordRef = useRef();
+	const { handleSignIn } = useAuth();
+
+	const [error, setError] = useState();
+	const [loading, setLoading] = useState();
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+
+		if (passwordRef.current.value.length < 6) {
+			return setError(
+				'Password is weak. It must be 6 characters or longer'
+			);
+		}
+		try {
+			setError('');
+			setLoading(true);
+			await handleSignIn(
+				emailRef.current.value,
+				passwordRef.current.value
+			);
+		} catch {
+			setError('Failed to sign in');
+		}
+		setLoading(false);
+	};
+
 	return (
 		<Wrapper>
-			<InputFields>
-				<Label htmlFor="email">Email: </Label>
-				<Input type="text" name="email" placeholder="Email" />
-				<Label htmlFor="password">Password: </Label>
-				<Input type="password" name="password" placeholder="Password" />
-			</InputFields>
-			<SubmitButton buttonText={'Login'} />
+			<form onSubmit={handleSubmit}>
+				{error && <p>{error}</p>}
+				<InputFields>
+					<Label htmlFor="email">Email: </Label>
+					<Input
+						type="text"
+						name="email"
+						placeholder="Email"
+						ref={emailRef}
+					/>
+					<Label htmlFor="password">Password: </Label>
+					<Input
+						type="password"
+						name="password"
+						placeholder="Password"
+						ref={passwordRef}
+					/>
+				</InputFields>
+				<SubmitButton buttonText={'Login'} />
+			</form>
 		</Wrapper>
 	);
 };

@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const SubmitButton = ({ buttonText }) => {
+const SubmitButton = ({ disabled, buttonText }) => {
 	return (
 		<Submit>
-			<Button type="submit">{buttonText}</Button>
+			<Button disabled={disabled} type="submit">
+				{buttonText}
+			</Button>
 		</Submit>
 	);
 };
@@ -20,6 +22,8 @@ const Button = styled.button`
 
 	min-height: 40px;
 	min-width: 70px;
+
+	margin-top: 1.25rem;
 
 	font-size: 1rem;
 

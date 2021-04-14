@@ -1,12 +1,12 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 
-import { CurrentUserContext } from '../../Contexts/UserContext';
+import { ModalContext } from '../../Contexts/ModalContext';
 
 import Register from './Register';
 import Login from './Login';
 const Modal = () => {
-	const { showModal, setShowModal } = useContext(CurrentUserContext);
+	const { showModal, setShowModal } = useContext(ModalContext);
 
 	//function handles closing the modal when escape is pressed
 	const escapeModal = (e) => {
@@ -95,6 +95,5 @@ const Body = styled.div`
 	position: relative;
 	z-index: 2;
 `;
-const Footer = styled.div``;
 
 export default Modal;

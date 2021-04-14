@@ -1,9 +1,26 @@
 [
 	{
-		"first name": "Test",
+		"_id": "000000001",
+		"first name": "Test1",
 		"last name": "User",
-		"email": "test@gmail.com",
-		"experience": "home cook",
-		"nationality": "Canada"
+		"email": "amateur@yahoo.com",
+		"password": "111111",
+		"experience": "amateur"
+	},
+	{
+		"_id": "000000002",
+		"first name": "Test2",
+		"last name": "homeCook",
+		"email": "homeCook@gmail.com",
+		"password": "111111",
+		"experience": "homeCook"
+	},
+	{
+		"_id": "000000003",
+		"first name": "Test3",
+		"last name": "culinaryPro",
+		"email": "culinaryPro@hotmail.com",
+		"password": "111111",
+		"experience": "culinaryPro"
 	}
 ]

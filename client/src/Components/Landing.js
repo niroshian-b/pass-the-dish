@@ -4,10 +4,10 @@ import styled, { keyframes } from 'styled-components';
 import Button from './Button';
 import Modal from './Modal';
 
-import { CurrentUserContext } from '../Contexts/UserContext';
+import { ModalContext } from '../Contexts/ModalContext';
 
 const Landing = () => {
-	const { showModal, setShowModal } = useContext(CurrentUserContext);
+	const { showModal, setShowModal } = useContext(ModalContext);
 	return (
 		<Wrapper>
 			{!showModal ? (
