@@ -1,17 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { GiKnifeFork } from 'react-icons/gi';
+import { GiKnifeFork, GiExitDoor } from 'react-icons/gi';
+
 import { useHistory } from 'react-router-dom';
+import { useAuth } from '../Contexts/AuthContext';
 
 const Header = () => {
 	const history = useHistory();
+	const { currentUser, handleSignOut } = useAuth();
+	const [error, setError] = useState('');
+
+	const handleLogOut = async () => {
+		setError('');
+		try {
+			await handleSignOut();
+			history.push('/');
+		} catch {
+			setError('Failed to log out');
+		}
+	};
 
 	return (
 		<Wrapper>
-			<SiteName onClick={() => history.push('/')}>
+			<SiteName
+				onClick={() => {
+					if (currentUser) {
+						history.push('/home');
+					}
+				}}
+			>
 				<GiKnifeFork />
 				<Name>Pass the Dishes</Name>
 			</SiteName>
+			{currentUser && (
+				<UserMenu>
+					<EditUserLink onClick={() => history.push('/edit-user')}>
+						<Username>Signed in as {currentUser.email}</Username>
+					</EditUserLink>
+
+					<LogOut variant="link" onClick={handleLogOut}>
+						<GiExitDoor size={25} />
+					</LogOut>
+				</UserMenu>
+			)}
 		</Wrapper>
 	);
 };
@@ -25,6 +56,7 @@ const Wrapper = styled.div`
 
 	display: flex;
 	align-items: center;
+	justify-content: space-between;
 `;
 
 const Container = styled.div`
@@ -38,6 +70,26 @@ const SiteName = styled(Container)`
 		cursor: pointer;
 	}
 `;
+
+const UserMenu = styled(Container)`
+	font-size: 1rem;
+	display: flex;
+	align-items: center;
+`;
+
+const IconLink = styled.div`
+	padding: 10px;
+	&:hover {
+		cursor: pointer;
+	}
+`;
+const EditUserLink = styled(IconLink)``;
+
+const Username = styled.div`
+	padding: 10px;
+`;
+
+const LogOut = styled(IconLink)``;
 
 const Name = styled.span`
 	margin-left: 10px;

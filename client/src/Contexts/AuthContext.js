@@ -11,12 +11,18 @@ export const AuthProvider = ({ children }) => {
 	const [currentUser, setCurrentUser] = useState();
 	const [loading, setLoading] = useState(true);
 
-	const handleSignUp = async (email, password) => {
+	const [error, setError] = useState();
+
+	const handleSignUp = (email, password) => {
 		return auth.createUserWithEmailAndPassword(email, password);
 	};
 
-	const handleSignIn = async (email, password) => {
+	const handleSignIn = (email, password) => {
 		return auth.signInWithEmailAndPassword(email, password);
+	};
+
+	const handleSignOut = () => {
+		return auth.signOut();
 	};
 
 	useEffect(() => {
@@ -30,7 +36,7 @@ export const AuthProvider = ({ children }) => {
 
 	return (
 		<AuthContext.Provider
-			value={{ currentUser, handleSignUp, handleSignIn }}
+			value={{ currentUser, handleSignUp, handleSignIn, handleSignOut }}
 		>
 			{!loading && children}
 		</AuthContext.Provider>
