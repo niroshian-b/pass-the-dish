@@ -35,5 +35,11 @@ const Button = styled.button`
 		color: var(--primary-color);
 		border: solid 3px var(--primary-color);
 	}
+
+	&:disabled {
+		border: 3px solid #999999;
+		background-color: #cccccc;
+		color: #666666;
+	}
 `;
 export default SubmitButton;

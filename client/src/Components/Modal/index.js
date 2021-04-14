@@ -22,7 +22,7 @@ const Modal = () => {
 			document.body.removeEventListener('keydown', escapeModal);
 			setShowModal(null);
 		};
-	});
+	}, []);
 
 	return (
 		<Wrapper onClick={() => setShowModal(null)}>
