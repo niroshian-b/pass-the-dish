@@ -20,6 +20,7 @@ const Modal = () => {
 
 		return () => {
 			document.body.removeEventListener('keydown', escapeModal);
+			setShowModal(null);
 		};
 	});
 
