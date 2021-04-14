@@ -1,11 +1,13 @@
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 
 import SubmitButton from './SubmitButton';
 
 import { useAuth } from '../../Contexts/AuthContext';
 
 const Register = () => {
+	const history = useHistory();
 	const emailRef = useRef();
 	const passwordRef = useRef();
 	const passwordConfirmRef = useRef();
@@ -32,6 +34,7 @@ const Register = () => {
 				emailRef.current.value,
 				passwordRef.current.value
 			);
+			history.push('/home');
 		} catch {
 			setError('Failed to create an account');
 		}

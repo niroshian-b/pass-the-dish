@@ -4,8 +4,10 @@ import styled from 'styled-components';
 import SubmitButton from './SubmitButton';
 
 import { useAuth } from '../../Contexts/AuthContext';
+import { useHistory } from 'react-router-dom';
 
 const Login = () => {
+	const history = useHistory();
 	const emailRef = useRef();
 	const passwordRef = useRef();
 	const { handleSignIn } = useAuth();
@@ -28,6 +30,7 @@ const Login = () => {
 				emailRef.current.value,
 				passwordRef.current.value
 			);
+			history.push('/home');
 		} catch {
 			setError('Failed to sign in');
 		}
@@ -54,7 +57,7 @@ const Login = () => {
 						ref={passwordRef}
 					/>
 				</InputFields>
-				<SubmitButton buttonText={'Login'} />
+				<SubmitButton disabled={loading} buttonText={'Login'} />
 			</form>
 		</Wrapper>
 	);
