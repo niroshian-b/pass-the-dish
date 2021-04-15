@@ -11,36 +11,49 @@ const EditUser = () => {
 	const emailRef = useRef();
 	const passwordRef = useRef();
 	const passwordConfirmRef = useRef();
-	const { currentUser } = useAuth();
+	const { currentUser, updateEmail, updatePassword } = useAuth();
 
 	const [error, setError] = useState();
 	const [loading, setLoading] = useState();
 
-	const handleSubmit = async (e) => {
-		//e.preventDefault();
-		//
-		//if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-		//	return setError('Passwords do not match');
-		//}
-		//if (passwordRef.current.value.length < 6) {
-		//	return setError(
-		//		'Password is weak. It must be 6 characters or longer'
-		//	);
-		//}
-		//try {
-		//	setError('');
-		//	setLoading(true);
-		//} catch {
-		//	setError('Failed to updated profile');
-		//}
-		//setLoading(false);
+	const handleSubmit = (e) => {
+		e.preventDefault();
+
+		const promises = [];
+		if (emailRef.current.value !== currentUser.email) {
+			promises.push(updateEmail(emailRef.current.value));
+		}
+		if (passwordRef.current.value) {
+			if (
+				passwordRef.current.value !== passwordConfirmRef.current.value
+			) {
+				return setError('Passwords do not match');
+			}
+			if (passwordRef.current.value.length < 6) {
+				return setError(
+					'Password is weak. It must be 6 characters or longer'
+				);
+			}
+			promises.push(updatePassword(passwordRef.current.value));
+		}
+
+		Promise.all(promises)
+			.then(() => {
+				history.push('/');
+			})
+			.catch(() => {
+				setError('Failed update account');
+			})
+			.finally(() => {
+				setLoading(false);
+			});
 	};
 	console.log(currentUser);
 	return (
 		<Wrapper>
 			<Form onSubmit={handleSubmit}>
 				{error && <p>{error}</p>}
-				<H2>Login</H2>
+				<H2>Edit User Profile</H2>
 				<TextGroup>
 					<Email>
 						<Label htmlFor="email">Email</Label>
@@ -51,7 +64,6 @@ const EditUser = () => {
 							placeholder="Your email"
 							ref={emailRef}
 							defaultValue={currentUser.email}
-							required
 						/>
 					</Email>
 				</TextGroup>
@@ -64,7 +76,6 @@ const EditUser = () => {
 							type="password"
 							placeholder="Leave blank to keep the same password"
 							ref={passwordRef}
-							required
 						/>
 					</LeftContainer>
 					<RightContainer>
@@ -75,7 +86,6 @@ const EditUser = () => {
 							type="password"
 							placeholder="Leave blank to keep the same password"
 							ref={passwordConfirmRef}
-							required
 						/>
 					</RightContainer>
 				</TextGroup>
@@ -88,7 +98,6 @@ const EditUser = () => {
 							name="firstName"
 							type="text"
 							placeholder="Your first name"
-							required
 						/>
 					</LeftContainer>
 					<RightContainer>
@@ -98,19 +107,13 @@ const EditUser = () => {
 							name="lastName"
 							type="text"
 							placeholder="Your last name"
-							required
 						/>
 					</RightContainer>
 				</TextGroup>
 				<H2>What Level of Cook are You?</H2>
 				<Experience>
 					<label>
-						<input
-							type="radio"
-							name="experience"
-							value="amateur"
-							required
-						/>
+						<input type="radio" name="experience" value="amateur" />
 						Amateur
 					</label>
 					<label>
@@ -118,7 +121,6 @@ const EditUser = () => {
 							type="radio"
 							name="experience"
 							value="homeCook"
-							required
 						/>
 						Home Cook
 					</label>
@@ -127,7 +129,6 @@ const EditUser = () => {
 							type="radio"
 							name="experience"
 							value="culinaryPro"
-							required
 						/>
 						Culinary Professional
 					</label>
