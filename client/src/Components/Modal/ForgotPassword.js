@@ -1,10 +1,9 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import SubmitButton from './SubmitButton';
 
 import { useAuth } from '../../Contexts/AuthContext';
-import { ModalContext } from '../../Contexts/ModalContext';
 
 const ForgotPassword = () => {
 	const emailRef = useRef();
@@ -22,9 +21,9 @@ const ForgotPassword = () => {
 			setError('');
 			setLoading(true);
 			await handleResetPassword(emailRef.current.value);
-			setPrompt('check your inbox for further instructions');
+			setPrompt('Check your inbox for further instructions');
 		} catch {
-			setError('Failed to reset Password');
+			setError('Failed to reset password');
 		}
 		setLoading(false);
 	};
@@ -57,11 +56,11 @@ const ForgotPassword = () => {
 const Wrapper = styled.div`
 	width: 100%;
 	height: 100%;
+	padding: 0.625em;
 `;
 const InputFields = styled.div`
 	display: flex;
 	flex-direction: column;
-	padding: 0.625em;
 `;
 const Label = styled.label`
 	color: var(--primary-color);
@@ -72,7 +71,7 @@ const Label = styled.label`
 
 const Input = styled.input`
 	padding: 0.25em 0.75em;
-	margin: 0.25em 0;
+	margin: 1em 0 0.25em;
 `;
 
 const Footer = styled.div`
