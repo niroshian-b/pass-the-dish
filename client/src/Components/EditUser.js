@@ -6,6 +6,7 @@ import SubmitButton from './Modal/SubmitButton';
 
 import { useAuth } from '../Contexts/AuthContext';
 
+//Editting the User Profile
 const EditUser = () => {
 	const history = useHistory();
 	const emailRef = useRef();
@@ -20,10 +21,12 @@ const EditUser = () => {
 		e.preventDefault();
 
 		const promises = [];
+		//check which values have been changed in the form
 		if (emailRef.current.value !== currentUser.email) {
 			promises.push(updateEmail(emailRef.current.value));
 		}
 		if (passwordRef.current.value) {
+			//verify password and strength of password
 			if (
 				passwordRef.current.value !== passwordConfirmRef.current.value
 			) {
@@ -40,6 +43,8 @@ const EditUser = () => {
 		Promise.all(promises)
 			.then(() => {
 				history.push('/');
+				//refresh the page to update the header
+				window.location.reload();
 			})
 			.catch(() => {
 				setError('Failed update account');

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+//Generic Base Button Template used throughout the app
 const BaseButton = ({ disabled, onClick, children }) => {
 	return (
 		<Button disabled={disabled} onClick={onClick}>

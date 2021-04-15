@@ -20,6 +20,7 @@ function App() {
 			<Header />
 			<Switch>
 				<Route exact path="/" component={Landing} />
+				{/* routes meant for after logging in */}
 				{currentUser && (
 					<>
 						<Route path="/home">

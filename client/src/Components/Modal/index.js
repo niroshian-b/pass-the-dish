@@ -6,6 +6,8 @@ import { ModalContext } from '../../Contexts/ModalContext';
 import Register from './Register';
 import Login from './Login';
 import ForgotPassword from './ForgotPassword';
+
+//Handles the modal used to register/login users
 const Modal = () => {
 	const { showModal, setShowModal } = useContext(ModalContext);
 
