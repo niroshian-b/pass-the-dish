@@ -1,6 +1,7 @@
 import React, { useRef, useState, useContext } from 'react';
 import styled from 'styled-components';
 
+import Button from '../Button';
 import SubmitButton from './SubmitButton';
 
 import { useAuth } from '../../Contexts/AuthContext';
@@ -59,13 +60,13 @@ const Login = () => {
 					/>
 				</InputFields>
 				<Footer>
-					<div
+					<Button
 						onClick={() => {
 							setShowModal('forgot-password');
 						}}
 					>
 						forgot password?
-					</div>
+					</Button>
 					<SubmitButton disabled={loading} buttonText={'Login'} />
 				</Footer>
 			</form>
@@ -76,11 +77,11 @@ const Login = () => {
 const Wrapper = styled.div`
 	width: 100%;
 	height: 100%;
+	padding: 0.625em;
 `;
 const InputFields = styled.div`
 	display: flex;
 	flex-direction: column;
-	padding: 0.625em;
 `;
 const Label = styled.label`
 	color: var(--primary-color);

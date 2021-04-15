@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import BaseButton from '../Button';
+
 const SubmitButton = ({ disabled, buttonText }) => {
 	return (
 		<Submit>
@@ -16,26 +18,7 @@ const Submit = styled.div`
 	flex-direction: row-reverse;
 	align-items: flex-end;
 `;
-const Button = styled.button`
-	background-color: var(--primary-color);
-	color: var(--secondary-color);
-
-	min-height: 40px;
-	min-width: 70px;
-
-	margin-top: 1.25rem;
-
-	font-size: 1rem;
-
-	border: solid 3px var(--primary-color);
-	border-radius: 9px;
-
-	&:hover {
-		background-color: var(--secondary-color);
-		color: var(--primary-color);
-		border: solid 3px var(--primary-color);
-	}
-
+const Button = styled(BaseButton)`
 	&:disabled {
 		border: 3px solid #999999;
 		background-color: #cccccc;
