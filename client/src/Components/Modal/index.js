@@ -5,6 +5,7 @@ import { ModalContext } from '../../Contexts/ModalContext';
 
 import Register from './Register';
 import Login from './Login';
+import ForgotPassword from './ForgotPassword';
 const Modal = () => {
 	const { showModal, setShowModal } = useContext(ModalContext);
 
@@ -48,6 +49,7 @@ const Modal = () => {
 				<Body>
 					{showModal === 'login' && <Login />}
 					{showModal === 'register' && <Register />}
+					{showModal === 'forgot-password' && <ForgotPassword />}
 				</Body>
 			</Content>
 		</Wrapper>
@@ -80,6 +82,10 @@ const Button = styled.button`
 	background-color: var(--secondary-color);
 	border: none;
 	border-bottom: 3px solid transparent;
+
+	&:hover {
+		border-bottom: 3px solid var(--primary-color);
+	}
 
 	${({ active }) =>
 		active &&

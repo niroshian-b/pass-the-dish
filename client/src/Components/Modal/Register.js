@@ -52,7 +52,7 @@ const Register = () => {
 						<EmailInput
 							id="email"
 							name="email"
-							type="text"
+							type="email"
 							placeholder="Your email"
 							ref={emailRef}
 							required
@@ -60,7 +60,7 @@ const Register = () => {
 					</Email>
 				</TextGroup>
 				<TextGroup>
-					<div>
+					<LeftContainer>
 						<label htmlFor="password">Password</label>
 						<Input
 							id="password"
@@ -70,8 +70,8 @@ const Register = () => {
 							ref={passwordRef}
 							required
 						/>
-					</div>
-					<div>
+					</LeftContainer>
+					<RightContainer>
 						<label htmlFor="confirmPassword">Confirm</label>
 						<Input
 							id="confirmPassword"
@@ -81,11 +81,11 @@ const Register = () => {
 							ref={passwordConfirmRef}
 							required
 						/>
-					</div>
+					</RightContainer>
 				</TextGroup>
 				<H2>Personal Information</H2>
 				<TextGroup>
-					<div>
+					<LeftContainer>
 						<label htmlFor="firstName">First Name</label>
 						<Input
 							id="firstName"
@@ -94,8 +94,8 @@ const Register = () => {
 							placeholder="Your first name"
 							required
 						/>
-					</div>
-					<div>
+					</LeftContainer>
+					<RightContainer>
 						<label htmlFor="lastName">Last Name</label>
 						<Input
 							id="lastName"
@@ -104,7 +104,7 @@ const Register = () => {
 							placeholder="Your last name"
 							required
 						/>
-					</div>
+					</RightContainer>
 				</TextGroup>
 				<H2>What Level of Cook are You?</H2>
 				<Experience>
@@ -173,6 +173,14 @@ const Email = styled.div`
 
 const EmailInput = styled(Input)`
 	width: calc(100% - 1.75em);
+`;
+
+const LeftContainer = styled.div`
+	width: 100%;
+	margin-right: 1em;
+`;
+const RightContainer = styled(LeftContainer)`
+	margin-left: 10px;
 `;
 
 export default Register;

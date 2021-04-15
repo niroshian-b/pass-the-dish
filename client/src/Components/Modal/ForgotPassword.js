@@ -1,39 +1,30 @@
-import React, { useRef, useState, useContext } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import SubmitButton from './SubmitButton';
 
 import { useAuth } from '../../Contexts/AuthContext';
 import { ModalContext } from '../../Contexts/ModalContext';
-import { useHistory } from 'react-router-dom';
 
-const Login = () => {
-	const history = useHistory();
+const ForgotPassword = () => {
 	const emailRef = useRef();
-	const passwordRef = useRef();
-	const { handleSignIn } = useAuth();
-	const { setShowModal } = useContext(ModalContext);
+	const { handleResetPassword } = useAuth();
+
 	const [error, setError] = useState();
+	const [prompt, setPrompt] = useState();
 	const [loading, setLoading] = useState();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		if (passwordRef.current.value.length < 6) {
-			return setError(
-				'Password is weak. It must be 6 characters or longer'
-			);
-		}
 		try {
+			setPrompt('');
 			setError('');
 			setLoading(true);
-			await handleSignIn(
-				emailRef.current.value,
-				passwordRef.current.value
-			);
-			history.push('/home');
+			await handleResetPassword(emailRef.current.value);
+			setPrompt('check your inbox for further instructions');
 		} catch {
-			setError('Failed to sign in');
+			setError('Failed to reset Password');
 		}
 		setLoading(false);
 	};
@@ -42,6 +33,7 @@ const Login = () => {
 		<Wrapper>
 			<form onSubmit={handleSubmit}>
 				{error && <p>{error}</p>}
+				{prompt && <p>{prompt}</p>}
 				<InputFields>
 					<Label htmlFor="email">Email: </Label>
 					<Input
@@ -50,23 +42,12 @@ const Login = () => {
 						placeholder="Email"
 						ref={emailRef}
 					/>
-					<Label htmlFor="password">Password: </Label>
-					<Input
-						type="password"
-						name="password"
-						placeholder="Password"
-						ref={passwordRef}
-					/>
 				</InputFields>
 				<Footer>
-					<div
-						onClick={() => {
-							setShowModal('forgot-password');
-						}}
-					>
-						forgot password?
-					</div>
-					<SubmitButton disabled={loading} buttonText={'Login'} />
+					<SubmitButton
+						disabled={loading}
+						buttonText={'Reset Password'}
+					/>
 				</Footer>
 			</form>
 		</Wrapper>
@@ -100,4 +81,4 @@ const Footer = styled.div`
 	align-items: center;
 `;
 
-export default Login;
+export default ForgotPassword;

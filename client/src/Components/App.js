@@ -5,9 +5,9 @@ import GlobalStyles from '../Globals/GlobalStyles';
 
 import Header from './Header';
 import Landing from './Landing';
-import Error from './Error';
 import HomeFeed from './HomeFeed';
 import EditUser from './EditUser';
+import Error from './Error';
 
 import { useAuth } from '../Contexts/AuthContext';
 
