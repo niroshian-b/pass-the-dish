@@ -8,10 +8,21 @@ import { useAuth } from '../../Contexts/AuthContext';
 
 const Register = () => {
 	const history = useHistory();
+
+	const displayNameRef = useRef();
 	const emailRef = useRef();
 	const passwordRef = useRef();
 	const passwordConfirmRef = useRef();
-	const { handleSignUp } = useAuth();
+	const firstNameRef = useRef();
+	const lastNameRef = useRef();
+
+	const [experience, setExperience] = useState(null);
+
+	const handleExperienceChange = (e) => {
+		setExperience(e.target.value);
+	};
+
+	const { handleSignUp, uploadUserData } = useAuth();
 
 	const [error, setError] = useState();
 	const [loading, setLoading] = useState();
@@ -27,17 +38,26 @@ const Register = () => {
 				'Password is weak. It must be 6 characters or longer'
 			);
 		}
-		try {
-			setError('');
-			setLoading(true);
-			await handleSignUp(
-				emailRef.current.value,
-				passwordRef.current.value
-			);
-			history.push('/home');
-		} catch {
-			setError('Failed to create an account');
-		}
+		setError('');
+		setLoading(true);
+		handleSignUp(emailRef.current.value, passwordRef.current.value)
+			.then((response) => {
+				const userId = `${response.user.uid}`;
+				const userData = {
+					uid: response.user.uid,
+					displayName: displayNameRef.current.value,
+					email: emailRef.current.value,
+					firstName: firstNameRef.current.value,
+					lastName: lastNameRef.current.value,
+					experience,
+				};
+				uploadUserData(userId, userData);
+				history.push('/home');
+			})
+			.catch((err) => {
+				setError('Failed to create an account');
+				console.log(err);
+			});
 		setLoading(false);
 	};
 
@@ -47,9 +67,21 @@ const Register = () => {
 				{error && <p>{error}</p>}
 				<H2>Login</H2>
 				<TextGroup>
+					<DisplayName>
+						<label htmlFor="displayName">Display Name</label>
+						<SoloInput
+							id="displayName"
+							name="displayName"
+							type="text"
+							ref={displayNameRef}
+							required
+						/>
+					</DisplayName>
+				</TextGroup>
+				<TextGroup>
 					<Email>
 						<label htmlFor="email">Email</label>
-						<EmailInput
+						<SoloInput
 							id="email"
 							name="email"
 							type="email"
@@ -92,6 +124,7 @@ const Register = () => {
 							name="firstName"
 							type="text"
 							placeholder="Your first name"
+							ref={firstNameRef}
 							required
 						/>
 					</LeftContainer>
@@ -102,6 +135,7 @@ const Register = () => {
 							name="lastName"
 							type="text"
 							placeholder="Your last name"
+							ref={lastNameRef}
 							required
 						/>
 					</RightContainer>
@@ -113,6 +147,7 @@ const Register = () => {
 							type="radio"
 							name="experience"
 							value="amateur"
+							onChange={handleExperienceChange}
 							required
 						/>
 						Amateur
@@ -122,6 +157,7 @@ const Register = () => {
 							type="radio"
 							name="experience"
 							value="homeCook"
+							onChange={handleExperienceChange}
 							required
 						/>
 						Home Cook
@@ -131,6 +167,7 @@ const Register = () => {
 							type="radio"
 							name="experience"
 							value="culinaryPro"
+							onChange={handleExperienceChange}
 							required
 						/>
 						Culinary Professional
@@ -160,6 +197,7 @@ const Experience = styled.div`
 const TextGroup = styled.div`
 	display: flex;
 	justify-content: space-between;
+	margin: 10px 0;
 `;
 
 const Input = styled.input`
@@ -167,13 +205,16 @@ const Input = styled.input`
 	margin: 0.125em 0;
 `;
 
-const Email = styled.div`
+const Solo = styled.div`
 	width: 100%;
 `;
 
-const EmailInput = styled(Input)`
+const SoloInput = styled(Input)`
 	width: calc(100% - 1.75em);
 `;
+
+const DisplayName = styled(Solo)``;
+const Email = styled(Solo)``;
 
 const LeftContainer = styled.div`
 	width: 100%;

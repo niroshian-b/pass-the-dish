@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { auth } from '../firebase';
-
+import { auth, database } from '../firebase';
 export const AuthContext = createContext();
 
 export const useAuth = () => {
@@ -14,18 +13,22 @@ export const AuthProvider = ({ children }) => {
 	const [error, setError] = useState();
 
 	const handleSignUp = (email, password) => {
+		// returns a promise that will create a new user in firebase using email and password
 		return auth.createUserWithEmailAndPassword(email, password);
 	};
 
 	const handleSignIn = (email, password) => {
+		//returns a promise that will sign in the user on firebase using email and password
 		return auth.signInWithEmailAndPassword(email, password);
 	};
 
 	const handleSignOut = () => {
+		//returns a promise that will sign user out on firebase
 		return auth.signOut();
 	};
 
 	const handleResetPassword = (email) => {
+		//returns a promise that will send a password reset email to the email
 		return auth.sendPasswordResetEmail(email);
 	};
 
@@ -35,6 +38,11 @@ export const AuthProvider = ({ children }) => {
 
 	const updatePassword = (password) => {
 		return currentUser.updatePassword(password);
+	};
+
+	const uploadUserData = (userId, userData) => {
+		//uploads the usersData to the firebase database under userId
+		database.ref('users' + userId).set(userData);
 	};
 
 	useEffect(() => {
@@ -56,6 +64,7 @@ export const AuthProvider = ({ children }) => {
 				handleResetPassword,
 				updateEmail,
 				updatePassword,
+				uploadUserData,
 			}}
 		>
 			{!loading && children}
