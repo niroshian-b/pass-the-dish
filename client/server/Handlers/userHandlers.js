@@ -1,4 +1,4 @@
-const users = require('../../data/sampleUsers.json');
+const users = require('../data/sampleUsers.json');
 
 const getAllUsers = (req, res) => {
 	res.status(200).json({
