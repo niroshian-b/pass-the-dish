@@ -8,7 +8,7 @@ const {
 	getUserById,
 	editUser,
 	deleteUser,
-} = require('./handlers/userHandler.js');
+} = require('../Handlers/userHandlers.js');
 
 router.get('/all', getAllUsers);
 router.get('/:_id', getUserById);

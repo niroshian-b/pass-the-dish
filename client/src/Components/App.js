@@ -20,15 +20,17 @@ function App() {
 			<Header />
 			<Switch>
 				<Route exact path="/" component={Landing} />
-				{/* routes meant for after logging in */}
-				{currentUser && (
-					<>
-						<Route path="/home">
-							<HomeFeed />
-						</Route>
-						<Route path="/edit-user" component={EditUser} />
-					</>
-				)}
+				{
+					/* routes meant for after logging in */
+					currentUser && (
+						<>
+							<Route path="/home">
+								<HomeFeed />
+							</Route>
+							<Route path="/edit-user" component={EditUser} />
+						</>
+					)
+				}
 				<Route path={['/error', '']} component={Error} />
 			</Switch>
 		</>
