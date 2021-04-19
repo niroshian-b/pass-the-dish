@@ -22,6 +22,7 @@ admin.initializeApp({
 });
 
 const db = admin.database();
+const rootRef = db.ref('passthedishes-dev-default-rtdb');
 
 const queryDatabase = async (key) => {
 	const ref = db.ref(key);
@@ -40,7 +41,7 @@ const queryDatabase = async (key) => {
 };
 
 const getAllUsers = async (req, res) => {
-	let users = await queryDatabase('users');
+	const users = await queryDatabase('users');
 	res.status(200).json({
 		status: 200,
 		message: 'got all Users',
@@ -48,28 +49,22 @@ const getAllUsers = async (req, res) => {
 	});
 };
 
-const getUserById = (req, res) => {
-	const user = users.find((user) => {
-		return Number(user._id) === Number(req.params._id);
-	});
-
-	if (user) {
-		res.status(200).json({ status: 200, message: 'got user', data: user });
-	} else {
-		res.status(404).json({ status: 404, message: 'user not found' });
-	}
-};
+const getUserByEmail = (req, res) => {};
 
 const addUser = async (req, res) => {
-	const appUsersRef = db.ref('users');
+	const uid = req.params.uid;
+	const appUsersRef = rootRef.child('users');
 
-	appUsersRef.push(req.body).then(() => {
-		res.status(200).json({
-			status: 200,
-			data: req.body,
-			message: 'new user',
+	appUsersRef
+		.child(uid)
+		.set(req.body)
+		.then(() => {
+			res.status(200).json({
+				status: 200,
+				data: req.body,
+				message: 'new user',
+			});
 		});
-	});
 };
 
 const editUser = (req, res) => {};
@@ -79,7 +74,7 @@ const deleteUser = (req, res) => {};
 module.exports = {
 	getAllUsers,
 	addUser,
-	getUserById,
+	getUserByEmail,
 	editUser,
 	deleteUser,
 };

@@ -5,15 +5,15 @@ const router = express.Router();
 const {
 	getAllUsers,
 	addUser,
-	getUserById,
+	getUserByEmail,
 	editUser,
 	deleteUser,
 } = require('../Handlers/userHandlers.js');
 
 router.get('/all', getAllUsers);
-router.get('/:_id', getUserById);
-router.post('/:_id', addUser);
-router.put('/:_id', editUser);
-router.delete('/:_id', deleteUser);
+router.get('/:email', getUserByEmail);
+router.post('/:uid', addUser);
+router.put('/', editUser);
+router.delete('/', deleteUser);
 
 module.exports = router;
