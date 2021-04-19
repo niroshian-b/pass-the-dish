@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { auth, database } from '../firebase';
+import { auth } from '../firebase';
 export const AuthContext = createContext();
 
 export const useAuth = () => {
@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }) => {
 	};
 
 	const uploadUserData = (userId, userData) => {
-		fetch('/users/' + userId, {
+		fetch('http://localhost:4000/users/' + userId, {
 			method: 'post',
 			headers: {
 				'Content-Type': 'application/json',

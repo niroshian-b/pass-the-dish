@@ -22,7 +22,6 @@ admin.initializeApp({
 });
 
 const db = admin.database();
-const rootRef = db.ref('passthedishes-dev-default-rtdb');
 
 const queryDatabase = async (key) => {
 	const ref = db.ref(key);
@@ -53,9 +52,9 @@ const getUserByEmail = (req, res) => {};
 
 const addUser = async (req, res) => {
 	const uid = req.params.uid;
-	const appUsersRef = rootRef.child('users');
+	const usersRef = db.ref('users');
 
-	appUsersRef
+	usersRef
 		.child(uid)
 		.set(req.body)
 		.then(() => {
