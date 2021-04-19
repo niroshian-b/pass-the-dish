@@ -164,10 +164,6 @@ const H2 = styled.h2`
 	margin-top: 1rem;
 `;
 
-const Container = styled.div`
-	width: calc(50%);
-`;
-
 const Experience = styled.div`
 	display: flex;
 	justify-content: space-around;

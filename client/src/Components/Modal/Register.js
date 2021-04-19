@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import SubmitButton from './SubmitButton';
 
 import { useAuth } from '../../Contexts/AuthContext';
+import { useDb } from '../../Contexts/DbContext';
 
 const Register = () => {
 	const history = useHistory();
@@ -22,7 +23,8 @@ const Register = () => {
 		setExperience(e.target.value);
 	};
 
-	const { handleSignUp, uploadUserData } = useAuth();
+	const { handleSignUp } = useAuth();
+	const { uploadUserData } = useDb();
 
 	const [error, setError] = useState();
 	const [loading, setLoading] = useState();

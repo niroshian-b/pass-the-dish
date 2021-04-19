@@ -40,20 +40,53 @@ const queryDatabase = async (key) => {
 };
 
 const getAllUsers = async (req, res) => {
-	const users = await queryDatabase('users');
-	res.status(200).json({
-		status: 200,
-		message: 'got all Users',
-		data: users,
-	});
+	try {
+		const users = await queryDatabase('users');
+
+		res.status(200).json({
+			status: 200,
+			message: 'got all Users',
+			data: users,
+		});
+	} catch (err) {
+		console.error(err);
+		res.status(400).json({ status: 400, message: 'could not get users' });
+	}
 };
 
-const getUserByEmail = (req, res) => {};
+const getUserByID = async (req, res) => {
+	const uid = req.params.uid;
+	let user = null;
+
+	try {
+		const users = await queryDatabase('users');
+		user = users[uid];
+		if (user) {
+			res.status(200).json({
+				status: 200,
+				message: `found user with ${uid}`,
+				data: user,
+			});
+		} else {
+			res.status(404).json({
+				status: 404,
+				message: `could not find user with ${uid}`,
+			});
+		}
+	} catch (err) {
+		console.error(err);
+		res.status(400).json({
+			status: 400,
+			message: err.message,
+		});
+	}
+};
 
 const addUser = async (req, res) => {
 	const uid = req.params.uid;
 	const usersRef = db.ref('users');
 
+	//[TODO] should add better validation when adding users, so that user data cannot be manipulated by sending post requests
 	usersRef
 		.child(uid)
 		.set(req.body)
@@ -73,7 +106,7 @@ const deleteUser = (req, res) => {};
 module.exports = {
 	getAllUsers,
 	addUser,
-	getUserByEmail,
+	getUserByID,
 	editUser,
 	deleteUser,
 };

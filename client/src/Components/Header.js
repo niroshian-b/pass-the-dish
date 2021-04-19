@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { GiKnifeFork, GiExitDoor } from 'react-icons/gi';
 
@@ -7,8 +7,7 @@ import { useAuth } from '../Contexts/AuthContext';
 
 const Header = () => {
 	const history = useHistory();
-	const { currentUser, handleSignOut } = useAuth();
-	const [error, setError] = useState('');
+	const { currentUser, handleSignOut, error, setError } = useAuth();
 
 	const handleLogOut = async () => {
 		setError('');
