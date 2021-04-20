@@ -9,8 +9,7 @@ import { useDb } from '../Contexts/DbContext';
 const Header = () => {
 	const history = useHistory();
 	const { currentUser, handleSignOut, setError } = useAuth();
-	const { getUserData } = useDb();
-	const [userData, setUserData] = useState(null);
+	const { getUserData, currentUserData } = useDb();
 
 	const handleLogOut = async () => {
 		setError('');
@@ -22,18 +21,7 @@ const Header = () => {
 		}
 	};
 
-	const handleLoading = async () => {
-		if (currentUser) {
-			const data = await getUserData(currentUser.uid);
-			setUserData(data);
-		}
-	};
-
-	useEffect(() => {
-		handleLoading();
-	}, []);
-
-	console.log(userData);
+	console.log(currentUserData);
 	return (
 		<Wrapper>
 			<SiteName
@@ -46,10 +34,10 @@ const Header = () => {
 				<GiKnifeFork />
 				<Name>Pass the Dishes</Name>
 			</SiteName>
-			{userData && (
+			{currentUser && (
 				<UserMenu>
 					<EditUserLink onClick={() => history.push('/edit-user')}>
-						<Username>Hi {userData.displayName}</Username>
+						<Username>Hi {currentUser.email}</Username>
 					</EditUserLink>
 
 					<LogOut variant="link" onClick={handleLogOut}>

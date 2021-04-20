@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 export const DbContext = createContext();
 
 export const useDb = () => {
@@ -6,7 +6,9 @@ export const useDb = () => {
 };
 
 export const DbProvider = ({ children }) => {
-	const uploadUserData = (userData) => {
+	const [currentUserData, setCurrentUserData] = useState(null);
+
+	const uploadUserData = async (userData) => {
 		fetch('http://localhost:4000/data/users/', {
 			method: 'post',
 			headers: {
@@ -21,6 +23,8 @@ export const DbProvider = ({ children }) => {
 			.catch((err) => {
 				console.error(err);
 			});
+
+		setCurrentUserData(userData);
 	};
 
 	const getUserData = async (userId) => {
@@ -39,7 +43,14 @@ export const DbProvider = ({ children }) => {
 	};
 
 	return (
-		<DbContext.Provider value={{ uploadUserData, getUserData }}>
+		<DbContext.Provider
+			value={{
+				uploadUserData,
+				getUserData,
+				currentUserData,
+				setCurrentUserData,
+			}}
+		>
 			{children}
 		</DbContext.Provider>
 	);

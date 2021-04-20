@@ -5,7 +5,8 @@ const morgan = require('morgan');
 require('dotenv').config();
 const PORT = 4000;
 
-const dataRouter = require('./Routers/dataRouter');
+const userRouter = require('./Routers/userRouter');
+const postRouter = require('./Routers/postRouter');
 
 express()
 	.use(function (req, res, next) {
@@ -26,8 +27,8 @@ express()
 	.use(express.urlencoded({ extended: false }))
 	.use('/', express.static(__dirname + '/'))
 
-	.use('/data', dataRouter)
-
+	.use('/data/posts', postRouter)
+	.use('/data/users', userRouter)
 	.get('*', (req, res) =>
 		res.status(400).json('Error, you took a wrong turn!')
 	)
