@@ -7,7 +7,7 @@ export const useDb = () => {
 
 export const DbProvider = ({ children }) => {
 	const uploadUserData = (userId, userData) => {
-		fetch('https://localhost:4000/users/' + userId, {
+		fetch('http://localhost:4000/data/users/' + userId, {
 			method: 'post',
 			headers: {
 				'Content-Type': 'application/json',
@@ -17,11 +17,29 @@ export const DbProvider = ({ children }) => {
 			.then((res) => res.json())
 			.then((json) => {
 				console.log(json.data);
+			})
+			.catch((err) => {
+				console.error(err);
 			});
 	};
 
+	const getUserData = async (userId) => {
+		const userData = await fetch(
+			'http://localhost:4000/data/users/' + userId
+		)
+			.then((res) => res.json())
+			.then((json) => {
+				return json.data;
+			})
+			.catch((err) => {
+				console.error(err);
+			});
+
+		return userData;
+	};
+
 	return (
-		<DbContext.Provider value={{ uploadUserData }}>
+		<DbContext.Provider value={{ uploadUserData, getUserData }}>
 			{children}
 		</DbContext.Provider>
 	);

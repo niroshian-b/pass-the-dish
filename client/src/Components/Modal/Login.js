@@ -32,10 +32,10 @@ const Login = () => {
 				emailRef.current.value,
 				passwordRef.current.value
 			);
-			history.push('/home');
 		} catch {
 			setError('Failed to sign in');
 		}
+		history.push('/home');
 		setLoading(false);
 	};
 

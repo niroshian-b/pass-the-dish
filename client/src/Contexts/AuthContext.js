@@ -49,25 +49,6 @@ export const AuthProvider = ({ children }) => {
 		return unsubscribe;
 	}, []);
 
-	useEffect(() => {
-		if (currentUser) {
-			async function fetchUserData() {
-				const userData = await fetch(
-					'http://localhost:4000/users/' + currentUser.email
-				)
-					.then((res) => res.json())
-					.then((json) => {
-						console.log(json.data);
-						setCurrentUser(json.data);
-					});
-
-				return userData;
-			}
-
-			fetchUserData();
-		}
-	}, []);
-
 	return (
 		<AuthContext.Provider
 			value={{

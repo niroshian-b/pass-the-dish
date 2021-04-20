@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { GiKnifeFork, GiExitDoor } from 'react-icons/gi';
 
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../Contexts/AuthContext';
+import { useDb } from '../Contexts/DbContext';
 
 const Header = () => {
 	const history = useHistory();
-	const { currentUser, handleSignOut, error, setError } = useAuth();
+	const { currentUser, handleSignOut, setError } = useAuth();
+	const { getUserData } = useDb();
+	const [userData, setUserData] = useState(null);
 
 	const handleLogOut = async () => {
 		setError('');
@@ -19,6 +22,18 @@ const Header = () => {
 		}
 	};
 
+	const handleLoading = async () => {
+		if (currentUser) {
+			const data = await getUserData(currentUser.uid);
+			setUserData(data);
+		}
+	};
+
+	useEffect(() => {
+		handleLoading();
+	}, []);
+
+	console.log(userData);
 	return (
 		<Wrapper>
 			<SiteName
@@ -31,10 +46,10 @@ const Header = () => {
 				<GiKnifeFork />
 				<Name>Pass the Dishes</Name>
 			</SiteName>
-			{currentUser && (
+			{userData && (
 				<UserMenu>
 					<EditUserLink onClick={() => history.push('/edit-user')}>
-						<Username>Signed in as {currentUser.email}</Username>
+						<Username>Hi {userData.displayName}</Username>
 					</EditUserLink>
 
 					<LogOut variant="link" onClick={handleLogOut}>

@@ -5,7 +5,7 @@ const morgan = require('morgan');
 require('dotenv').config();
 const PORT = 4000;
 
-const userRouter = require('./Routers/userRouter');
+const userRouter = require('./Routers/dataRouter');
 
 express()
 	.use(function (req, res, next) {
@@ -26,7 +26,7 @@ express()
 	.use(express.urlencoded({ extended: false }))
 	.use('/', express.static(__dirname + '/'))
 
-	.use('/users', userRouter)
+	.use('/data', dataRouter)
 
 	.get('*', (req, res) =>
 		res.status(400).json('Error, you took a wrong turn!')

@@ -1,5 +1,3 @@
-const users = require('../data/sampleUsers.json');
-
 const admin = require('firebase-admin');
 
 require('dotenv').config();
@@ -39,6 +37,9 @@ const queryDatabase = async (key) => {
 	return data;
 };
 
+//------------------
+//USER HANDLERS
+//------------------
 const getAllUsers = async (req, res) => {
 	try {
 		const users = await queryDatabase('users');
@@ -99,14 +100,20 @@ const addUser = async (req, res) => {
 		});
 };
 
-const editUser = (req, res) => {};
+const updateUser = (req, res) => {
+	//[TODO] should be able to update User after the User
+};
 
 const deleteUser = (req, res) => {};
+
+//------------------
+//POST HANDLERS
+//------------------
 
 module.exports = {
 	getAllUsers,
 	addUser,
 	getUserByID,
-	editUser,
+	updateUser,
 	deleteUser,
 };

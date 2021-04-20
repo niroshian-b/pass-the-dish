@@ -24,9 +24,7 @@ function App() {
 					/* routes meant for after logging in */
 					currentUser && (
 						<>
-							<Route path="/home">
-								<HomeFeed />
-							</Route>
+							<Route path="/home" component={HomeFeed} />
 							<Route path="/edit-user" component={EditUser} />
 						</>
 					)
