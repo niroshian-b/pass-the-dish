@@ -76,25 +76,33 @@ const getUserByID = async (req, res) => {
 		}
 	} catch (err) {
 		console.error(err);
-		res.status(400).json({
-			status: 400,
+		res.status(500).json({
+			status: 500,
 			message: err.message,
 		});
 	}
 };
 
 const addUser = async (req, res) => {
-	const uid = req.params.uid;
+	const uid = req.body.uid;
 	const usersRef = db.ref('users');
 
+	const newUser = {
+		displayName: req.body.displayName,
+		email: req.body.email,
+		experience: req.body.experience,
+		firstName: req.body.firstName,
+		lastName: req.body.lastName,
+		uid: req.body.uid,
+	};
 	//[TODO] should add better validation when adding users, so that user data cannot be manipulated by sending post requests
 	usersRef
 		.child(uid)
-		.set(req.body)
+		.set(newUser)
 		.then(() => {
 			res.status(200).json({
 				status: 200,
-				data: req.body,
+				data: newUser,
 				message: 'new user',
 			});
 		});
@@ -109,6 +117,43 @@ const deleteUser = (req, res) => {};
 //------------------
 //POST HANDLERS
 //------------------
+const getAllPosts = async (req, res) => {
+	try {
+		const posts = await queryDatabase('posts');
+
+		res.status(200).json({
+			status: 200,
+			message: 'got all Posts',
+			data: posts,
+		});
+	} catch (err) {
+		console.error(err);
+		res.status(500).json({ status: 500, message: 'could not get posts' });
+	}
+};
+
+const getPost = (req, res) => {};
+const addPost = (req, res) => {
+	//req.body should have an object containing the image[optional], the ingredients list, and the time+date created, as well as the uid of the user who created the recipe
+	const postsRef = db.ref('posts');
+
+	const newPost = {
+		image: req.body.image,
+		title: req.body.title,
+		ingredients: req.body.ingredients,
+		directions: req.body.directions,
+		uid: req.body.uid,
+		datePosted: req.body.date,
+	};
+
+	postsRef.push(newPost).then(() => {
+		res.status(200).json({
+			status: 200,
+			data: newPost,
+			message: 'new post',
+		});
+	});
+};
 
 module.exports = {
 	getAllUsers,
@@ -116,4 +161,7 @@ module.exports = {
 	getUserByID,
 	updateUser,
 	deleteUser,
+	getAllPosts,
+	getPost,
+	addPost,
 };

@@ -6,8 +6,8 @@ export const useDb = () => {
 };
 
 export const DbProvider = ({ children }) => {
-	const uploadUserData = (userId, userData) => {
-		fetch('http://localhost:4000/data/users/' + userId, {
+	const uploadUserData = (userData) => {
+		fetch('http://localhost:4000/data/users/', {
 			method: 'post',
 			headers: {
 				'Content-Type': 'application/json',

@@ -5,7 +5,7 @@ const morgan = require('morgan');
 require('dotenv').config();
 const PORT = 4000;
 
-const userRouter = require('./Routers/dataRouter');
+const dataRouter = require('./Routers/dataRouter');
 
 express()
 	.use(function (req, res, next) {
