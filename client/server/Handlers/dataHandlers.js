@@ -142,6 +142,8 @@ const addPost = (req, res) => {
 		title: req.body.title,
 		ingredients: req.body.ingredients,
 		directions: req.body.directions,
+		likeCount: 1,
+		commentCount: 0,
 		uid: req.body.uid,
 		datePosted: req.body.date,
 	};
