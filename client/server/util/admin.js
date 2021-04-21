@@ -15,6 +15,7 @@ admin.initializeApp({
 		client_x509_cert_url: process.env.FIREBASE_CLIENT_CERT,
 	}),
 	databaseURL: process.env.FB_DATABASE_URL,
+	storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
 });
 
 const db = admin.database();

@@ -1,3 +1,5 @@
+const { db } = require('./admin');
+
 exports.queryDatabase = async (key) => {
 	const ref = db.ref(key);
 	let data;
