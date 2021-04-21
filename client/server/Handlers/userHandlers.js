@@ -94,10 +94,12 @@ const uploadUserImage = (req, res) => {
 	let generatedToken = uuid();
 
 	busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
+		console.log(fieldname, file, filename, encoding, mimetype);
 		const imageExtension = filename.split('.')[filename.split('.') - 1];
 		imageFileName = `${Math.round(
 			Math.random() * 10000000000
 		).toString()}.${imageExtension}`;
+		//[problem] path not showing up as String???
 		const filepath = path.join(os.tmpdir(), imageFileName);
 		imageToBeUploaded = { filepath, mimetype };
 		file.pipe(fs.createWriteStream(filepath));
@@ -135,6 +137,8 @@ const uploadUserImage = (req, res) => {
 					.json({ error: 'image failed to upload' });
 			});
 	});
+
+	busboy.end(req.rawBody);
 };
 
 const updateUser = (req, res) => {

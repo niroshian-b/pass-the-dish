@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { auth } from '../firebase';
 export const AuthContext = createContext();
 
@@ -7,6 +8,7 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
+	const dispatch = useDispatch();
 	const [currentUser, setCurrentUser] = useState();
 	const [loading, setLoading] = useState(true);
 

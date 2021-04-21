@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import GlobalStyles from '../Globals/GlobalStyles';
@@ -10,9 +10,24 @@ import EditUser from './EditUser';
 import Error from './Error';
 
 import { useAuth } from '../Contexts/AuthContext';
+import { useDb } from '../Contexts/DbContext';
 
 function App() {
 	const { currentUser } = useAuth();
+	const { getUserData, setCurrentUserData } = useDb();
+
+	useEffect(() => {
+		//if the user is returning we must fetch the user's data before pushing to their home page
+		if (currentUser) {
+			const fetchUserData = async () => {
+				const userData = await getUserData(currentUser.uid);
+
+				setCurrentUserData(userData);
+			};
+
+			fetchUserData();
+		}
+	}, []);
 
 	return (
 		<>

@@ -9,7 +9,7 @@ import { useDb } from '../Contexts/DbContext';
 const Header = () => {
 	const history = useHistory();
 	const { currentUser, handleSignOut, setError } = useAuth();
-	const { getUserData, currentUserData } = useDb();
+	const { currentUserData } = useDb();
 
 	const handleLogOut = async () => {
 		setError('');
@@ -36,8 +36,12 @@ const Header = () => {
 			</SiteName>
 			{currentUser && (
 				<UserMenu>
+					<DisplayPic
+						src={currentUserData.imageURL}
+						alt="user-display-picture"
+					></DisplayPic>
 					<EditUserLink onClick={() => history.push('/edit-user')}>
-						<Username>Hi {currentUser.email}</Username>
+						<Username>{currentUserData.displayName}</Username>
 					</EditUserLink>
 
 					<LogOut variant="link" onClick={handleLogOut}>
@@ -85,11 +89,15 @@ const IconLink = styled.div`
 		cursor: pointer;
 	}
 `;
+
+const DisplayPic = styled.img`
+	height: 25px;
+	width: 25px;
+	border-radius: 50%;
+`;
 const EditUserLink = styled(IconLink)``;
 
-const Username = styled.div`
-	padding: 10px;
-`;
+const Username = styled.div``;
 
 const LogOut = styled(IconLink)``;
 
