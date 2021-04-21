@@ -1,0 +1,62 @@
+{
+  "posts" : {
+    "-MYkvbl6RyxJ44lzT9F9" : {
+      "commentCount" : 0,
+      "datePosted" : "Tue, 20 Apr 2021 20:06:42 GMT",
+      "directions" : [ "Rinse the rice", "Cook rice : Add the rice, water and a pinch of salt in a large saucepan with a tight fitting lid on medium high until the water reaches a simmer then reduce heat to medium-low to maintain the simmer for 15-18 mins until all the water is absorbed and the rice is tender. Remove the rice from the heat and let it steam closed for an additional 10 mins", "Once the rice has cooled to room temperature lightly salt your hands and take a handful of rice", "gently press the rice against your palm and create a small divet in the center", "add a small amount of jelly to the center of the divet", "Take another handful of rice and press it over the jelly and rice. Press gently around the ball of rice to form a triangle", "Finally press a small strip of nori the bottom of the rice ball" ],
+      "image" : "",
+      "ingredients" : [ "1 Tbsp of jelly", "1 cup of sushi rice", "1 cup of water", "salt", "1 slice of nori sheet" ],
+      "likeCount" : 1,
+      "title" : "Jelly Donut",
+      "uid" : "FaEPv9eO28VugMNw6v2UeRpxAW42"
+    },
+    "-MYkvhEov4h21-miXFOZ" : {
+      "commentCount" : 0,
+      "datePosted" : "Tue, 20 Apr 2021 20:11:47 GMT",
+      "directions" : [ "Spread Peanut Butter on to one slice of bread", "Spread honey on second slice of bread", "put bread slices together" ],
+      "image" : "",
+      "ingredients" : [ "1 tsp of honey", "1 tsp of peanut butter", "2 slices of bread" ],
+      "likeCount" : 1,
+      "title" : "Peanut Butter and Honey Sandwich",
+      "uid" : "V1IXdpxHZDZgAtvN2dFjjFFs6c53"
+    }
+  },
+  "users" : {
+    "A45ixiVZVDfvoCyiAUlc5DTvoD52" : {
+      "displayName" : "pickleRick",
+      "email" : "pickle@rick.com",
+      "experience" : "amateur",
+      "firstName" : "pickle",
+      "imageURL" : "https://firebasestorage.googleapis.com/v0/b/passthedishes-dev.appspot.com/o/defaultAvatar.png?alt=media&token=7906f442-bb29-40fd-9e2e-f01dcbca8b39",
+      "lastName" : "rick",
+      "uid" : "A45ixiVZVDfvoCyiAUlc5DTvoD52"
+    },
+    "FaEPv9eO28VugMNw6v2UeRpxAW42" : {
+      "displayName" : "chefBrock",
+      "email" : "brock@pewterGym.com",
+      "experience" : "culinaryPro",
+      "firstName" : "Brock",
+      "imageURL" : "https://firebasestorage.googleapis.com/v0/b/passthedishes-dev.appspot.com/o/defaultAvatar.png?alt=media&token=7906f442-bb29-40fd-9e2e-f01dcbca8b39",
+      "lastName" : "Pewter",
+      "uid" : "FaEPv9eO28VugMNw6v2UeRpxAW42"
+    },
+    "H41gfAjbGTbosyP4vac0r37ZqnG2" : {
+      "displayName" : "roadQueen",
+      "email" : "roadQueen@madworld.com",
+      "experience" : "amateur",
+      "firstName" : "Summer",
+      "imageURL" : "https://firebasestorage.googleapis.com/v0/b/passthedishes-dev.appspot.com/o/defaultAvatar.png?alt=media&token=7906f442-bb29-40fd-9e2e-f01dcbca8b39",
+      "lastName" : "Smith",
+      "uid" : "H41gfAjbGTbosyP4vac0r37ZqnG2"
+    },
+    "V1IXdpxHZDZgAtvN2dFjjFFs6c53" : {
+      "displayName" : "niroBayleaf",
+      "email" : "niroshian.b@gmail.com",
+      "experience" : "homeCook",
+      "firstName" : "Niro",
+      "imageURL" : "https://firebasestorage.googleapis.com/v0/b/passthedishes-dev.appspot.com/o/defaultAvatar.png?alt=media&token=7906f442-bb29-40fd-9e2e-f01dcbca8b39",
+      "lastName" : "B",
+      "uid" : "V1IXdpxHZDZgAtvN2dFjjFFs6c53"
+    }
+  }
+}

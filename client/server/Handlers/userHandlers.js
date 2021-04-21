@@ -1,5 +1,4 @@
 const { admin, db } = require('../util/admin');
-const { uuid } = require('uuidv4');
 require('dotenv').config();
 
 const { queryDatabase } = require('../util/databaseHelpers');
@@ -81,71 +80,16 @@ const addUser = async (req, res) => {
 };
 
 const uploadUserImage = (req, res) => {
-	const BusBoy = require('busboy');
-	const path = require('path');
-	const os = require('os');
-	const fs = require('fs');
-
-	const busboy = new BusBoy({ headers: req.headers });
-	const userId = req.params.uid;
-
-	let imageToBeUploaded = {};
-	let imageFileName;
-	let generatedToken = uuid();
-
-	busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
-		console.log(fieldname, file, filename, encoding, mimetype);
-		const imageExtension = filename.split('.')[filename.split('.') - 1];
-		imageFileName = `${Math.round(
-			Math.random() * 10000000000
-		).toString()}.${imageExtension}`;
-		//[problem] path not showing up as String???
-		const filepath = path.join(os.tmpdir(), imageFileName);
-		imageToBeUploaded = { filepath, mimetype };
-		file.pipe(fs.createWriteStream(filepath));
-	});
-	busboy.on('finish', () => {
-		//add the image to the storage
-		admin
-			.storage()
-			.bucket()
-			.upload(imageToBeUploaded.filepath, {
-				resumable: false,
-				metadata: {
-					metadata: {
-						contentType: imageToBeUploaded.mimetype,
-						firebaseStorageDownloadTokens: generatedToken,
-					},
-				},
-			})
-			.then(() => {
-				//update the user who the image belongs to
-				const imageUrl = `https://firebasestorage.googleapis.com/v0/b/${process.env.REACT_APP_FIREBASE_STORAGE_BUCKET}/o/${imageFileName}?alt=media&token=${generatedToken}`;
-				//updates the users image in the database
-				return db
-					.ref('users')
-					.child(userId)
-					.update({ imageURL: imageUrl });
-			})
-			.then(() => {
-				return res.json({ message: 'image uploaded successfully' });
-			})
-			.catch((err) => {
-				console.error(err);
-				return res
-					.status(500)
-					.json({ error: 'image failed to upload' });
-			});
-	});
-
-	busboy.end(req.rawBody);
+	//[TODO] should be able to update User display picture
 };
 
 const updateUser = (req, res) => {
-	//[TODO] should be able to update User after the User
+	//[TODO] should be able to update User after the user has been registered
 };
 
-const deleteUser = (req, res) => {};
+const deleteUser = (req, res) => {
+	//[TODO] should be able to delete Users from the database
+};
 
 module.exports = {
 	getAllUsers,

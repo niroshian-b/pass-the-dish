@@ -34,7 +34,7 @@ const Header = () => {
 				<GiKnifeFork />
 				<Name>Pass the Dishes</Name>
 			</SiteName>
-			{currentUser && (
+			{currentUserData && (
 				<UserMenu>
 					<DisplayPic
 						src={currentUserData.imageURL}

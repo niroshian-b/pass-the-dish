@@ -15,7 +15,7 @@ router.get('/', getAllUsers);
 router.get('/:uid', getUserByID);
 router.post('/', addUser);
 router.post('/image/:uid', uploadUserImage);
-router.put('/:uid', updateUser);
+router.post('/:uid', updateUser);
 router.delete('/:uid', deleteUser);
 
 module.exports = router;
