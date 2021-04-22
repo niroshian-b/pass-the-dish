@@ -1,7 +1,11 @@
 import { createGlobalStyle } from 'styled-components';
+import './fonts.css';
 
 export default createGlobalStyle`
 :root {
+      --heading-font: 'Alegreya Sans SC', sans-serif;
+      --max-page-width: 1200px;
+      --page-padding: 20px;
     }
 html, body, div, span, applet, object, iframe,
   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -31,6 +35,11 @@ html, body, div, span, applet, object, iframe,
 *,
 *:before,
 *:after {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
 }
 
+h1, h2, h3, h4, button, label{
+	font-family: var(--heading-font);
+}
 `;

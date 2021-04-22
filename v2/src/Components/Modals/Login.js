@@ -88,11 +88,9 @@ export default function Login({ open, setOpen }) {
 const Form = styled.form`
 	display: flex;
 	flex-direction: column;
+	margin-bottom: 20px;
 `;
 
-const ResetPassword = styled.div`
-	margin-top: 20px;
-	&:hover {
-		cursor: pointer;
-	}
+const ResetPassword = styled(Button)`
+	width: 100%;
 `;

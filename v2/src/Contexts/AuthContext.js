@@ -11,6 +11,8 @@ export const AuthProvider = ({ children }) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [user, setUser] = useState(null);
+	const [openLogin, setOpenLogin] = useState(false);
+	const [openRegister, setOpenRegister] = useState(false);
 
 	useEffect(() => {
 		const unsubscribe = auth.onAuthStateChanged((authUser) => {
@@ -73,6 +75,10 @@ export const AuthProvider = ({ children }) => {
 				handleSignIn,
 				handlePasswordReset,
 				user,
+				openLogin,
+				setOpenLogin,
+				openRegister,
+				setOpenRegister,
 			}}
 		>
 			{children}
