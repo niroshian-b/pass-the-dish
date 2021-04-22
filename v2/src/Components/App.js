@@ -9,6 +9,7 @@ import { Button } from '@material-ui/core';
 import Post from './Post';
 import Register from './Modals/Register';
 import Login from './Modals/Login';
+import PostUpload from './PostUpload.js';
 
 function App() {
 	const [posts, setPosts] = useState([]);
@@ -46,6 +47,7 @@ function App() {
 						)}
 					</UserInfo>
 				</Header>
+				{user && <PostUpload user={user} />}
 				<Register open={openRegister} setOpen={setOpenRegister} />
 				<Login open={openLogin} setOpen={setOpenLogin} />
 				{posts.map(({ id, post }) => (
