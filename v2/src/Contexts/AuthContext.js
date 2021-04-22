@@ -37,6 +37,7 @@ export const AuthProvider = ({ children }) => {
 			.then((authUser) => {
 				return authUser.updateProfile({ displayName: username });
 			})
+			.then((updatedUser) => setUser(updatedUser))
 			.catch((err) => console.log(err.message));
 	};
 
