@@ -19,11 +19,16 @@ function App() {
 	const { user, handleSignOut } = useAuth();
 
 	useEffect(() => {
-		db.collection('posts').onSnapshot((snapshot) => {
-			setPosts(
-				snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() }))
-			);
-		});
+		db.collection('posts')
+			.orderBy('timestamp', 'desc')
+			.onSnapshot((snapshot) => {
+				setPosts(
+					snapshot.docs.map((doc) => ({
+						id: doc.id,
+						post: doc.data(),
+					}))
+				);
+			});
 	}, []);
 
 	return (
@@ -53,7 +58,7 @@ function App() {
 				{posts.map(({ id, post }) => (
 					<Post
 						key={id}
-						handle={post.handle}
+						handle={post.username}
 						caption={post.caption}
 						imageUrl={post.imageUrl}
 					/>

@@ -17,6 +17,9 @@ export const AuthProvider = ({ children }) => {
 			if (authUser) {
 				console.log(authUser);
 				setUser(authUser);
+				if (!authUser.displayName) {
+					return authUser.updateProfile({ displayName: username });
+				}
 			} else {
 				setUser(null);
 			}
@@ -32,9 +35,9 @@ export const AuthProvider = ({ children }) => {
 
 		auth.createUserWithEmailAndPassword(email, password)
 			.then((authUser) => {
-				authUser.updateProfile({ displayName: username });
+				return authUser.updateProfile({ displayName: username });
 			})
-			.catch((err) => alert(err.message));
+			.catch((err) => console.log(err.message));
 	};
 
 	const handleSignOut = () => {

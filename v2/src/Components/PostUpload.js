@@ -56,7 +56,7 @@ const PostUpload = ({ user }) => {
 
 	return (
 		<Wrapper>
-			<progress value={progress} max="100" />
+			<Progress value={progress} max="100" />
 			<input
 				type="text"
 				placeholder="Enter a caption"
@@ -69,5 +69,17 @@ const PostUpload = ({ user }) => {
 	);
 };
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	width: 60%;
+	margin: 10px auto;
+	background-color: white;
+	border-top: solid lightgrey;
+`;
+
+const Progress = styled.progress`
+	width: 100%;
+`;
+
 export default PostUpload;
