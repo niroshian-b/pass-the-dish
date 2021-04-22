@@ -4,7 +4,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import { Button, Input } from '@material-ui/core';
 import { useAuth } from '../../Contexts/AuthContext';
-import ForgotPassword from './ForgotPassword';
 
 function getModalStyle() {
 	const top = 50;
@@ -28,25 +27,26 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function Login({ open, setOpen }) {
+export default function ForgotPassword({ open, setOpen }) {
 	const [modalStyle] = React.useState(getModalStyle);
 	const classes = useStyles();
-	const { email, setEmail, password, setPassword, handleSignIn } = useAuth();
-	const [forgotPassword, setForgotPassword] = useState(false);
+	const { email, setEmail, handlePasswordReset } = useAuth();
+	const [emailSent, setEmailSent] = useState(false);
 
 	return (
-		<>
-			{forgotPassword ? (
-				<ForgotPassword
-					open={forgotPassword}
-					setOpen={setForgotPassword}
-				/>
-			) : (
-				<Modal open={open} onClose={() => setOpen(false)}>
-					<div style={modalStyle} className={classes.paper}>
+		<Modal
+			open={open}
+			onClose={() => {
+				setOpen(false);
+				setEmailSent(false);
+			}}
+		>
+			<div style={modalStyle} className={classes.paper}>
+				{!emailSent ? (
+					<>
 						<Form>
 							<center>
-								<h3>Login</h3>
+								<h3>Forgot Password</h3>
 							</center>
 							<Input
 								type="email"
@@ -54,34 +54,25 @@ export default function Login({ open, setOpen }) {
 								value={email}
 								onChange={(e) => setEmail(e.target.value)}
 							></Input>
-							<Input
-								type="password"
-								placeholder="Password"
-								value={password}
-								onChange={(e) => setPassword(e.target.value)}
-							></Input>
 							<Button
 								type="submit"
 								onClick={(e) => {
-									handleSignIn(e);
-									setOpen(false);
+									handlePasswordReset(e);
+									setEmailSent(true);
 								}}
 							>
-								Sign In
+								Confirm Email
 							</Button>
 						</Form>
-
-						<ResetPassword
-							onClick={() => {
-								setForgotPassword(true);
-							}}
-						>
-							Forgot Password?
-						</ResetPassword>
-					</div>
-				</Modal>
-			)}
-		</>
+					</>
+				) : (
+					<PasswordResetResponse>
+						Check the provided email for instructions regarding
+						resetting your password
+					</PasswordResetResponse>
+				)}
+			</div>
+		</Modal>
 	);
 }
 
@@ -90,9 +81,8 @@ const Form = styled.form`
 	flex-direction: column;
 `;
 
-const ResetPassword = styled.div`
-	margin-top: 20px;
-	&:hover {
-		cursor: pointer;
-	}
+const PasswordResetResponse = styled.h3`
+	display: flex;
+	align-items: center;
+	justify-content: center;
 `;

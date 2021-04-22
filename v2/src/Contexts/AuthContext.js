@@ -53,6 +53,12 @@ export const AuthProvider = ({ children }) => {
 		);
 	};
 
+	const handlePasswordReset = (e) => {
+		e.preventDefault();
+
+		return auth.sendPasswordResetEmail(email);
+	};
+
 	return (
 		<AuthContext.Provider
 			value={{
@@ -65,6 +71,7 @@ export const AuthProvider = ({ children }) => {
 				handleSignUp,
 				handleSignOut,
 				handleSignIn,
+				handlePasswordReset,
 				user,
 			}}
 		>
