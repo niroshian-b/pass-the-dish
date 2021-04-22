@@ -39,7 +39,10 @@ function App() {
 					<HeaderLogo>Pass the Dishes</HeaderLogo>
 					<UserInfo>
 						{user ? (
-							<Button onClick={handleSignOut}>Logout</Button>
+							<>
+								<h2>{user.displayName}</h2>
+								<Button onClick={handleSignOut}>Logout</Button>
+							</>
 						) : (
 							<>
 								<Button onClick={() => setOpenLogin(true)}>
@@ -56,12 +59,16 @@ function App() {
 				<Register open={openRegister} setOpen={setOpenRegister} />
 				<Login open={openLogin} setOpen={setOpenLogin} />
 				{posts.map(({ id, post }) => (
-					<Post
-						key={id}
-						handle={post.username}
-						caption={post.caption}
-						imageUrl={post.imageUrl}
-					/>
+					<PostWrapper>
+						<Post
+							key={id}
+							postId={id}
+							user={user}
+							username={post.username}
+							caption={post.caption}
+							imageUrl={post.imageUrl}
+						/>
+					</PostWrapper>
 				))}
 			</Container>
 		</>
@@ -84,6 +91,14 @@ const Header = styled.div`
 
 const HeaderLogo = styled.h1``;
 
-const UserInfo = styled.div``;
+const UserInfo = styled.div`
+	display: flex;
+`;
+
+const PostWrapper = styled.div`
+	padding: 20px;
+	display: flex;
+	justify-content: center;
+`;
 
 export default App;

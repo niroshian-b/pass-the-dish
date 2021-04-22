@@ -73,9 +73,9 @@ const Wrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 60%;
+	padding: 10px;
 	margin: 10px auto;
 	background-color: white;
-	border-top: solid lightgrey;
 `;
 
 const Progress = styled.progress`
