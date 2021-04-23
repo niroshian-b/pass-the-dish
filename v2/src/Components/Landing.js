@@ -7,7 +7,6 @@ import { useAuth } from '../Contexts/AuthContext';
 import Post from './Post';
 import Register from './Modals/Register';
 import Login from './Modals/Login';
-import PostUpload from './PostUpload.js';
 
 function Landing() {
 	const [posts, setPosts] = useState([]);

@@ -4,7 +4,7 @@ import firebase from 'firebase';
 import { Button } from '@material-ui/core';
 import { storage, db } from '../firebase';
 
-const PostUpload = ({ user }) => {
+const ImageUpload = ({ user }) => {
 	const [image, setImage] = useState(null);
 	const [progress, setProgress] = useState(0);
 	const [caption, setCaption] = useState('');
@@ -82,4 +82,4 @@ const Progress = styled.progress`
 	width: 100%;
 `;
 
-export default PostUpload;
+export default ImageUpload;

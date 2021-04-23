@@ -14,7 +14,11 @@ const Header = () => {
 				<h1>Pass the Dishes</h1>
 			</HeaderLogo>
 
-			{user && <PostButton>Add New Recipe</PostButton>}
+			{user && (
+				<PostButton onClick={() => history.push('/addRecipe')}>
+					Add New Recipe
+				</PostButton>
+			)}
 			<UserInfo>
 				{user ? (
 					<>

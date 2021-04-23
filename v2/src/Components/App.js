@@ -4,6 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 
 import Header from './Header';
 import Landing from './Landing';
+import AddRecipe from './AddRecipe';
 import Error from './Error';
 
 const App = () => {
@@ -12,11 +13,9 @@ const App = () => {
 			<GlobalStyles />
 			<Header />
 			<Switch>
-				<Route exact path="/">
-					<Landing />
-				</Route>
-
-				<Route path={['/error', '*']} component={Error} />
+				<Route exact path="/" component={Landing} />
+				<Route path="/addRecipe" component={AddRecipe} />
+				<Route path={['/error', '']} component={Error} />
 			</Switch>
 		</>
 	);
