@@ -70,7 +70,10 @@ const RecipeDetails = () => {
 					<RecipeDirections>
 						<h3>Directions</h3>
 						{recipeDetails.recipe.map((step, index) => (
-							<RecipeStep key={index}>{step}</RecipeStep>
+							<RecipeStep key={index}>
+								<Num>{`Step ${index + 1} `}</Num>
+								<Step>{step}</Step>
+							</RecipeStep>
 						))}
 					</RecipeDirections>
 				</Recipe>
@@ -110,6 +113,7 @@ const RecipeImage = styled.img`
 
 const RecipeIngredients = styled.ul`
 	font-size: 20px;
+	list-style-type: none;
 `;
 const RecipeItem = styled.li`
 	margin: 5px 40px;
@@ -119,4 +123,15 @@ const RecipeDirections = styled(RecipeIngredients)``;
 const RecipeStep = styled(RecipeItem)`
 	margin: 20px;
 `;
+const Num = styled.div`
+	background-color: black;
+	color: white;
+	padding: 5px;
+	display: inline-block;
+`;
+
+const Step = styled.div`
+	padding: 5px;
+`;
+
 export default RecipeDetails;
