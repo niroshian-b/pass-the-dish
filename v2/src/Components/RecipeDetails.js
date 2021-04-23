@@ -72,7 +72,7 @@ const RecipeDetails = () => {
 						<h3>Directions</h3>
 						{recipeDetails.recipe.map((step, index) => (
 							<RecipeStep key={index}>
-								<Num>{`Step ${index + 1} `}</Num>
+								<Num>{`☑ Step ${index + 1} `}</Num>
 								<Step>{step}</Step>
 							</RecipeStep>
 						))}
