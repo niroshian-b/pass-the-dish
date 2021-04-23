@@ -59,7 +59,8 @@ const Container = styled.div`
 `;
 
 const PostWrapper = styled.div`
-	padding: 20px;
+	padding: 5px;
+	padding-top: 0px;
 	display: flex;
 	justify-content: center;
 `;

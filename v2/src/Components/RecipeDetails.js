@@ -21,6 +21,7 @@ const RecipeDetails = () => {
 	};
 
 	const getNutritionalInfo = async () => {
+		//[TODO] - figure out how to pass the recipe obj to the get request;
 		let prep = recipeDetails.recipe.join('. ');
 		let ingr = recipeDetails.ingredients.map((item) => {
 			return `${item.qty} ${item.measurement} ${item.name}`;
@@ -43,7 +44,7 @@ const RecipeDetails = () => {
 
 	useEffect(() => {
 		if (recipeDetails) {
-			setNutritionalInfo(getNutritionalInfo());
+			//setNutritionalInfo(getNutritionalInfo());
 		}
 	}, [recipeDetails]);
 
@@ -116,7 +117,7 @@ const RecipeIngredients = styled.ul`
 	list-style-type: none;
 `;
 const RecipeItem = styled.li`
-	margin: 5px 40px;
+	margin: 5px 20px;
 `;
 
 const RecipeDirections = styled(RecipeIngredients)``;
@@ -126,12 +127,14 @@ const RecipeStep = styled(RecipeItem)`
 const Num = styled.div`
 	background-color: black;
 	color: white;
+	font-family: var(--heading-font);
 	padding: 5px;
 	display: inline-block;
 `;
 
 const Step = styled.div`
 	padding: 5px;
+	padding-left: 0px;
 `;
 
 export default RecipeDetails;

@@ -4,6 +4,7 @@ import './fonts.css';
 export default createGlobalStyle`
 :root {
       --heading-font: 'Alegreya Sans SC', sans-serif;
+      --body-font: 'Raleway', sans-serif;
       --max-page-width: 1200px;
       --page-padding: 20px;
       --background-color: #F9F6F6;
@@ -38,6 +39,7 @@ html, body, div, span, applet, object, iframe,
 *:after {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
+  font-family: var(--body-font);
 }
 
 h1, h2, h3, h4, button, label{
