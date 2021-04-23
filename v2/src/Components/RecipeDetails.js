@@ -28,11 +28,14 @@ const RecipeDetails = () => {
 		});
 		ingr = ingr.join('!');
 
-		const data = fetch(
-			`http://localhost:4000/nutritionalInfo/${recipeDetails.caption}/${prep}/${ingr}`
-		)
+		const body = { prep, ingr };
+
+		const data = fetch(`http://localhost:4000/nutritionalInfo/`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(body),
+		})
 			.then((response) => response.json())
-			.then((json) => console.log(json))
 			.catch((err) => console.error(err));
 
 		return data;
@@ -44,7 +47,7 @@ const RecipeDetails = () => {
 
 	useEffect(() => {
 		if (recipeDetails) {
-			//setNutritionalInfo(getNutritionalInfo());
+			setNutritionalInfo(getNutritionalInfo());
 		}
 	}, [recipeDetails]);
 
