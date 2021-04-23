@@ -6,6 +6,7 @@ export default createGlobalStyle`
       --heading-font: 'Alegreya Sans SC', sans-serif;
       --max-page-width: 1200px;
       --page-padding: 20px;
+      --background-color: #F9F6F6;
     }
 html, body, div, span, applet, object, iframe,
   h1, h2, h3, h4, h5, h6, p, blockquote, pre,

@@ -13,7 +13,6 @@ function Landing() {
 
 	const {
 		user,
-		handleSignOut,
 		openRegister,
 		setOpenRegister,
 		openLogin,
@@ -56,7 +55,7 @@ function Landing() {
 }
 
 const Container = styled.div`
-	background-color: #fafafa;
+	background-color: var(--background-color);
 `;
 
 const PostWrapper = styled.div`

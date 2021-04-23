@@ -5,7 +5,8 @@ import { db } from '../firebase';
 
 const RecipeDetails = () => {
 	const { id } = useParams();
-	const [recipeDetails, setRecipeDetails] = useState([]);
+	const [recipeDetails, setRecipeDetails] = useState(null);
+	const [nutritionalInfo, setNutritionalInfo] = useState(null);
 	const [loading, setLoading] = useState(false);
 
 	const getRecipeDetails = async () => {
@@ -19,17 +20,42 @@ const RecipeDetails = () => {
 			});
 	};
 
+	const getNutritionalInfo = async () => {
+		let prep = recipeDetails.recipe.join('. ');
+		let ingr = recipeDetails.ingredients.map((item) => {
+			return `${item.qty} ${item.measurement} ${item.name}`;
+		});
+		ingr = ingr.join('!');
+
+		const data = fetch(
+			`http://localhost:4000/nutritionalInfo/${recipeDetails.caption}/${prep}/${ingr}`
+		)
+			.then((response) => response.json())
+			.then((json) => console.log(json))
+			.catch((err) => console.error(err));
+
+		return data;
+	};
+
 	useEffect(() => {
 		getRecipeDetails();
 	}, []);
 
-	console.log(recipeDetails);
+	useEffect(() => {
+		if (recipeDetails) {
+			setNutritionalInfo(getNutritionalInfo());
+		}
+	}, [recipeDetails]);
+
+	if (nutritionalInfo) {
+		console.log(nutritionalInfo);
+	}
 	return (
 		<Wrapper>
 			{loading ? (
 				<Recipe>
 					<RecipeCaption>{recipeDetails.caption}</RecipeCaption>
-
+					<RecipeAuthor>{`Submitted by ${recipeDetails.username}`}</RecipeAuthor>
 					<RecipeImage src={recipeDetails.imageUrl}></RecipeImage>
 
 					<RecipeIngredients>
@@ -58,7 +84,7 @@ const RecipeDetails = () => {
 const Wrapper = styled.div`
 	display: flex;
 	justify-content: center;
-	background-color: #fafafa;
+	background-color: var(--background-color);
 `;
 const Recipe = styled.div`
 	max-width: 700px;
@@ -71,6 +97,11 @@ const Recipe = styled.div`
 const RecipeCaption = styled.h2`
 	text-align: center;
 `;
+
+const RecipeAuthor = styled.h3`
+	text-align: center;
+`;
+
 const RecipeImage = styled.img`
 	width: 100%;
 	object-fit: contain;

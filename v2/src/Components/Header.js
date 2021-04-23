@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
+import { GiKnifeFork } from 'react-icons/gi';
 import { Button } from '@material-ui/core';
 import { Avatar as avatar } from '@material-ui/core';
 import { useAuth } from '../Contexts/AuthContext';
@@ -11,7 +12,10 @@ const Header = () => {
 	return (
 		<HeaderWrapper>
 			<HeaderLogo onClick={() => history.push('/')}>
-				<h1>Pass the Dishes</h1>
+				<h1>
+					<GiKnifeFork />
+					Pass the Dishes
+				</h1>
 			</HeaderLogo>
 
 			{user && (
@@ -52,7 +56,7 @@ const HeaderWrapper = styled.div`
 	justify-content: space-between;
 	object-fit: contain;
 	padding: 20px;
-	background-color: #fafafa;
+	background-color: white;
 	border-bottom: 1px solid lightgray;
 	z-index: 1;
 `;
