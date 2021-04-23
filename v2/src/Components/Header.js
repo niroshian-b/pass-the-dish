@@ -2,8 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { GiKnifeFork } from 'react-icons/gi';
-import { Button } from '@material-ui/core';
-import { Avatar as avatar } from '@material-ui/core';
+import { Avatar as avatar, Button, withStyles } from '@material-ui/core';
 import { useAuth } from '../Contexts/AuthContext';
 import Register from './Modals/Register';
 import Login from './Modals/Login';
@@ -78,6 +77,9 @@ const HeaderLogo = styled.div`
 	&:hover {
 		cursor: pointer;
 	}
+	@media (max-width: 767px) {
+		font-size: 10px;
+	}
 `;
 
 const UserInfo = styled.div`
@@ -89,11 +91,13 @@ const PostButton = styled(Button)`
 	width: 100%;
 	max-width: 300px;
 `;
-const Avatar = styled(avatar)`
-	margin-right: 10px;
-`;
+
+const Avatar = withStyles({ root: { 'margin-right': '10px' } })(avatar);
 
 const DisplayName = styled.h2`
 	margin-right: 20px;
+	@media (max-width: 767px) {
+		font-size: 20px;
+	}
 `;
 export default Header;

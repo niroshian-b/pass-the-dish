@@ -45,4 +45,8 @@ html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, button, label{
 	font-family: var(--heading-font);
 }
+
+input, select{
+  padding: 5px;
+}
 `;
