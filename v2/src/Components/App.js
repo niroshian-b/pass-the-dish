@@ -5,8 +5,9 @@ import { Switch, Route } from 'react-router-dom';
 import Header from './Header';
 import Landing from './Landing';
 import AddRecipe from './AddRecipe';
-import Error from './Error';
+import ErrorPage from './Error';
 import { useAuth } from '../Contexts/AuthContext';
+import RecipeDetails from './RecipeDetails';
 
 const App = () => {
 	const { user } = useAuth();
@@ -16,8 +17,9 @@ const App = () => {
 			<Header />
 			<Switch>
 				<Route exact path="/" component={Landing} />
+				<Route path="/recipeDetails/:id" component={RecipeDetails} />
 				{user && <Route path="/addRecipe" component={AddRecipe} />}
-				<Route path={['/error', '']} component={Error} />
+				<Route path={['/error', '']} component={ErrorPage} />
 			</Switch>
 		</>
 	);

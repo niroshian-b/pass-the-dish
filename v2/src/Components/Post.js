@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import firebase from 'firebase';
+import moment from 'moment';
 import { Avatar as avatar } from '@material-ui/core';
 import { db } from '../firebase';
+import { useHistory } from 'react-router-dom';
 
 function Post({ postId, user, username, imageUrl, caption }) {
+	const history = useHistory();
 	const [comments, setComments] = useState([]);
 	const [newComment, setNewComment] = useState('');
 
@@ -16,7 +19,12 @@ function Post({ postId, user, username, imageUrl, caption }) {
 				.doc(postId)
 				.collection('comments')
 				.onSnapshot((snapshot) => {
-					setComments(snapshot.docs.map((doc) => doc.data()));
+					setComments(
+						snapshot.docs.map((doc) => ({
+							id: doc.id,
+							comment: doc.data(),
+						}))
+					);
 				});
 		}
 
@@ -32,11 +40,12 @@ function Post({ postId, user, username, imageUrl, caption }) {
 			username: user.displayName,
 			timestamp: firebase.firestore.FieldValue.serverTimestamp(),
 		});
+
+		setNewComment('');
 	};
 
 	return (
 		<Wrapper>
-			{/* header -> avatar + username */}
 			<PostHeader>
 				<Avatar
 					alt={username}
@@ -45,10 +54,11 @@ function Post({ postId, user, username, imageUrl, caption }) {
 				<h3>{username}</h3>
 			</PostHeader>
 
-			{/* image */}
-			<PostImage className="post__image" src={imageUrl}></PostImage>
+			<PostImage
+				src={imageUrl}
+				onClick={() => history.push(`/recipeDetails/${postId}`)}
+			></PostImage>
 
-			{/* username + recipe */}
 			<PostCaption>
 				<Caption>
 					<strong>{username}</strong> - {caption}
@@ -56,11 +66,23 @@ function Post({ postId, user, username, imageUrl, caption }) {
 			</PostCaption>
 			{comments.length > 0 && (
 				<PostComments>
-					{comments.map((comment) => (
-						<Comment>
-							<strong>{comment.username}</strong> {comment.text}
-						</Comment>
-					))}
+					{comments.map(({ id, comment }) => {
+						return (
+							<Comment key={id}>
+								<p>
+									<strong>{comment.username}</strong>{' '}
+									{comment.text}
+								</p>
+								<Time>
+									{comment.timestamp &&
+										`${moment().from(
+											comment.timestamp.toDate(),
+											true
+										)} ago`}
+								</Time>
+							</Comment>
+						);
+					})}
 				</PostComments>
 			)}
 			{user && (
@@ -106,10 +128,15 @@ const PostImage = styled.img`
 	object-fit: contain;
 	border-top: 1px solid lightgray;
 	border-bottom: 1px solid lightgray;
+
+	&:hover {
+		cursor: pointer;
+	}
 `;
 
 const PostCaption = styled.div`
 	padding: 10px 20px;
+	border-bottom: 1px solid lightgray;
 `;
 
 const Caption = styled.p`
@@ -120,8 +147,13 @@ const PostComments = styled.div`
 	padding: 20px;
 `;
 
-const Comment = styled.p`
+const Comment = styled.div`
 	font-size: 14px;
+`;
+
+const Time = styled.p`
+	font-size: 10px;
+	text-align: right;
 `;
 
 const Form = styled.form`
@@ -133,7 +165,6 @@ const Input = styled.input`
 	flex: 1;
 	padding: 10px;
 	border: none;
-	border-top: 1px solid lightgrey;
 `;
 
 const Button = styled.button`
