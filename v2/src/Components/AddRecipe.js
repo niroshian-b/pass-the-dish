@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import firebase from 'firebase';
+import { useHistory } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 import { storage, db } from '../firebase';
 import { useAuth } from '../Contexts/AuthContext';
+import Ingredients from './Ingredients';
+import Recipe from './Recipe';
 
 const AddRecipe = () => {
+	const history = useHistory();
 	const { user } = useAuth();
 	const [image, setImage] = useState(null);
 	const [progress, setProgress] = useState(0);
 	const [caption, setCaption] = useState('');
+	const [ingredients, setIngredients] = useState([
+		{ qty: '', measurement: '', name: '' },
+	]);
 	const [recipe, setRecipe] = useState(['']);
-	//const [uploadedImage, setUploadedImage] = useState(null);
 
 	const handleChange = (e) => {
 		if (e.target.files[0]) {
@@ -48,51 +54,46 @@ const AddRecipe = () => {
 							caption: caption,
 							imageUrl: url,
 							username: user.displayName,
+							ingredients,
+							recipe,
 						});
 
 						//setUploadedImage(url);
+						setIngredients([
+							{ qty: '', measurement: '', name: '' },
+						]);
+						setRecipe(['']);
 						setProgress(0);
 						setCaption('');
 						setImage(null);
+						history.push('/');
 					});
 			}
 		);
 	};
-
-	// useEffect(() => {
-	// return () => {
-	// setUploadedImage(null);
-	// };
-	// }, []);
 
 	return (
 		<Wrapper>
 			{/* {uploadedImage && <img src={uploadedImage} alt="Uploaded Image" />} */}
 			<Progress value={progress} max="100" />
 			<h2>Post Image</h2>
-			<input type="file" onChange={handleChange} />
+			<input type="file" onChange={handleChange} required />
 			{/* input that will be add directions to a list that will compose the recipe */}
-			<h2>Post Caption</h2>
-			<input
-				type="text"
-				placeholder="Enter a caption"
-				value={caption}
-				onChange={(e) => setCaption(e.target.value)}
+			<Caption>
+				<h2>Post Caption</h2>
+				<Input
+					type="text"
+					placeholder="Enter a caption"
+					value={caption}
+					onChange={(e) => setCaption(e.target.value)}
+					required
+				/>
+			</Caption>
+			<Ingredients
+				ingredients={ingredients}
+				setIngredients={setIngredients}
 			/>
-			<h2>Recipe</h2>
-			{recipe.forEach((step) => {
-				<div>
-					<input type="text" placeholder="Step" />
-					<button
-						onClick={() => {
-							let newRecipe = recipe.push('');
-							setRecipe(newRecipe);
-						}}
-					>
-						➕
-					</button>
-				</div>;
-			})}
+			<Recipe recipe={recipe} setRecipe={setRecipe} />
 			<Button onClick={handleUpload}>Upload</Button>
 		</Wrapper>
 	);
@@ -109,6 +110,14 @@ const Wrapper = styled.div`
 
 const Progress = styled.progress`
 	width: 100%;
+`;
+
+const Caption = styled.div`
+	padding: 10px 0;
+`;
+
+const Input = styled.input`
+	width: 80%;
 `;
 
 export default AddRecipe;

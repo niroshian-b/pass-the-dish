@@ -54,13 +54,15 @@ function Post({ postId, user, username, imageUrl, caption }) {
 					<strong>{username}</strong> - {caption}
 				</Caption>
 			</PostCaption>
-			<PostComments>
-				{comments.map((comment) => (
-					<Comment>
-						<strong>{comment.username}</strong> {comment.text}
-					</Comment>
-				))}
-			</PostComments>
+			{comments.length > 0 && (
+				<PostComments>
+					{comments.map((comment) => (
+						<Comment>
+							<strong>{comment.username}</strong> {comment.text}
+						</Comment>
+					))}
+				</PostComments>
+			)}
 			{user && (
 				<Form>
 					<Input
@@ -86,7 +88,7 @@ const Wrapper = styled.div`
 	max-width: 500px;
 	background-color: white;
 	border: 1px solid lightgray;
-	margin-bottom: 45px;
+	margin-bottom: 20px;
 `;
 
 const Avatar = styled(avatar)`
@@ -107,7 +109,7 @@ const PostImage = styled.img`
 `;
 
 const PostCaption = styled.div`
-	padding-left: 20px;
+	padding: 10px 20px;
 `;
 
 const Caption = styled.p`
