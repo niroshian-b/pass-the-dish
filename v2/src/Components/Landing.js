@@ -5,19 +5,10 @@ import { db } from '../firebase';
 import { useAuth } from '../Contexts/AuthContext';
 
 import Post from './Post';
-import Register from './Modals/Register';
-import Login from './Modals/Login';
-
 function Landing() {
 	const [posts, setPosts] = useState([]);
 
-	const {
-		user,
-		openRegister,
-		setOpenRegister,
-		openLogin,
-		setOpenLogin,
-	} = useAuth();
+	const { user } = useAuth();
 
 	useEffect(() => {
 		db.collection('posts')
@@ -35,8 +26,6 @@ function Landing() {
 	return (
 		<>
 			<Container>
-				<Register open={openRegister} setOpen={setOpenRegister} />
-				<Login open={openLogin} setOpen={setOpenLogin} />
 				{posts.map(({ id, post }) => (
 					<PostWrapper>
 						<Post

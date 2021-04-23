@@ -5,46 +5,59 @@ import { GiKnifeFork } from 'react-icons/gi';
 import { Button } from '@material-ui/core';
 import { Avatar as avatar } from '@material-ui/core';
 import { useAuth } from '../Contexts/AuthContext';
+import Register from './Modals/Register';
+import Login from './Modals/Login';
 
 const Header = () => {
 	const history = useHistory();
-	const { user, handleSignOut, setOpenLogin, setOpenRegister } = useAuth();
+	const {
+		user,
+		handleSignOut,
+		openRegister,
+		setOpenRegister,
+		openLogin,
+		setOpenLogin,
+	} = useAuth();
 	return (
-		<HeaderWrapper>
-			<HeaderLogo onClick={() => history.push('/')}>
-				<h1>
-					<GiKnifeFork />
-					Pass the Dishes
-				</h1>
-			</HeaderLogo>
+		<>
+			<HeaderWrapper>
+				<HeaderLogo onClick={() => history.push('/')}>
+					<h1>
+						<GiKnifeFork />
+						Pass the Dishes
+					</h1>
+				</HeaderLogo>
 
-			{user && (
-				<PostButton onClick={() => history.push('/addRecipe')}>
-					Add New Recipe
-				</PostButton>
-			)}
-			<UserInfo>
-				{user ? (
-					<>
-						<Avatar
-							alt={user.displayName}
-							src={user.photoURL}
-						></Avatar>
-						<DisplayName>{user.displayName}</DisplayName>
-						<Button onClick={handleSignOut}>Logout</Button>
-					</>
-				) : (
-					<>
-						<Button onClick={() => setOpenLogin(true)}>
-							Login
-						</Button>
-						<Button onClick={() => setOpenRegister(true)}>
-							Register
-						</Button>
-					</>
+				{user && (
+					<PostButton onClick={() => history.push('/addRecipe')}>
+						Add New Recipe
+					</PostButton>
 				)}
-			</UserInfo>
-		</HeaderWrapper>
+				<UserInfo>
+					{user ? (
+						<>
+							<Avatar
+								alt={user.displayName}
+								src={user.photoURL}
+							></Avatar>
+							<DisplayName>{user.displayName}</DisplayName>
+							<Button onClick={handleSignOut}>Logout</Button>
+						</>
+					) : (
+						<>
+							<Button onClick={() => setOpenLogin(true)}>
+								Login
+							</Button>
+							<Button onClick={() => setOpenRegister(true)}>
+								Register
+							</Button>
+						</>
+					)}
+				</UserInfo>
+			</HeaderWrapper>
+			<Register open={openRegister} setOpen={setOpenRegister} />
+			<Login open={openLogin} setOpen={setOpenLogin} />
+		</>
 	);
 };
 
