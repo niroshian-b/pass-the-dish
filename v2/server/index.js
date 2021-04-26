@@ -25,6 +25,8 @@ express()
 	.use('/nutritionalInfo', edamamRouter)
 
 	.get('*', (req, res) =>
-		res.status(400).json('Error, you took a wrong turn!')
+		res
+			.status(400)
+			.json({ status: 400, message: 'Error, you took a wrong turn!' })
 	)
 	.listen(PORT, () => console.info(`Listening on port ${PORT}`));

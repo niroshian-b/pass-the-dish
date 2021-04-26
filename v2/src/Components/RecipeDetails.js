@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
 import { db } from '../firebase';
 
@@ -21,24 +22,28 @@ const RecipeDetails = () => {
 	};
 
 	const getNutritionalInfo = async () => {
-		//[TODO] - figure out how to pass the recipe obj to the get request;
-		let prep = recipeDetails.recipe.join('. ');
-		let ingr = recipeDetails.ingredients.map((item) => {
-			return `${item.qty} ${item.measurement} ${item.name}`;
-		});
-		ingr = ingr.join('!');
+		const ingr = recipeDetails.ingredients.map(
+			(item) => `${item.qty} ${item.measurement} ${item.name}`
+		);
+		let prep;
+		recipeDetails.recipe.forEach((step) => (prep += step));
 
-		const body = { prep, ingr };
+		const body = {
+			title: recipeDetails.caption,
+			ingr,
+			prep,
+		};
 
-		const data = fetch(`http://localhost:4000/nutritionalInfo/`, {
+		await fetch('http://localhost:4000/nutritionalInfo/', {
 			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(body),
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+			},
 		})
 			.then((response) => response.json())
-			.catch((err) => console.error(err));
-
-		return data;
+			.then((data) => console.log(data));
 	};
 
 	useEffect(() => {
@@ -47,7 +52,7 @@ const RecipeDetails = () => {
 
 	useEffect(() => {
 		if (recipeDetails) {
-			setNutritionalInfo(getNutritionalInfo());
+			getNutritionalInfo();
 		}
 	}, [recipeDetails]);
 
@@ -55,36 +60,42 @@ const RecipeDetails = () => {
 		console.log(nutritionalInfo);
 	}
 	return (
-		<Wrapper>
-			{loading ? (
-				<Recipe>
-					<RecipeCaption>{recipeDetails.caption}</RecipeCaption>
-					<RecipeAuthor>{`Submitted by ${recipeDetails.username}`}</RecipeAuthor>
-					<RecipeImage src={recipeDetails.imageUrl}></RecipeImage>
+		<>
+			<Helmet>
+				<script src="https://developer.edamam.com/attribution/badge.js"></script>
+			</Helmet>
+			<Wrapper>
+				{loading ? (
+					<Recipe>
+						<RecipeCaption>{recipeDetails.caption}</RecipeCaption>
+						<RecipeAuthor>{`Submitted by ${recipeDetails.username}`}</RecipeAuthor>
+						<RecipeImage src={recipeDetails.imageUrl}></RecipeImage>
 
-					<RecipeIngredients>
-						<h3>Ingredients</h3>
-						{recipeDetails.ingredients.map((item, index) => (
-							<RecipeItem
-								key={index}
-							>{`${item.qty} ${item.measurement} ${item.name}`}</RecipeItem>
-						))}
-					</RecipeIngredients>
+						<RecipeIngredients>
+							<h3>Ingredients</h3>
+							{recipeDetails.ingredients.map((item, index) => (
+								<RecipeItem
+									key={index}
+								>{`${item.qty} ${item.measurement} ${item.name}`}</RecipeItem>
+							))}
+						</RecipeIngredients>
 
-					<RecipeDirections>
-						<h3>Directions</h3>
-						{recipeDetails.recipe.map((step, index) => (
-							<RecipeStep key={index}>
-								<Num>{`☑ Step ${index + 1} `}</Num>
-								<Step>{step}</Step>
-							</RecipeStep>
-						))}
-					</RecipeDirections>
-				</Recipe>
-			) : (
-				<h2>loading</h2>
-			)}
-		</Wrapper>
+						<RecipeDirections>
+							<h3>Directions</h3>
+							{recipeDetails.recipe.map((step, index) => (
+								<RecipeStep key={index}>
+									<Num>{`☑ Step ${index + 1} `}</Num>
+									<Step>{step}</Step>
+								</RecipeStep>
+							))}
+						</RecipeDirections>
+					</Recipe>
+				) : (
+					<h2>loading</h2>
+				)}
+				<div id="edamam-badge" data-color="white"></div>
+			</Wrapper>
+		</>
 	);
 };
 

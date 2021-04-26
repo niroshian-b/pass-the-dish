@@ -1,37 +1,27 @@
-const fetch = require('node-fetch');
 require('dotenv').config();
-let data;
+const axios = require('axios');
 
-const applicationID = process.env.EDAMAM_APPLICATION_ID;
-const applicationKey = process.env.EDAMAM_APPLICATION_KEY;
-
-const getNutritionalInfo = (req, res) => {
-	res.status(200).json({ status: 200, data });
-};
+const applicationID = process.env.REACT_APP_EDAMAM_APPLICATION_ID;
+const applicationKey = process.env.REACT_APP_EDAMAM_APPLICATION_KEY;
 
 const postNutritionalInfo = async (req, res) => {
-	const body = JSON.stringify(req.body);
+	const data = JSON.stringify(req.body);
+	const options = {
+		method: 'POST',
+		url: `https://api.edamam.com/api/nutrition-details?app_id=${process.env.REACT_APP_EDAMAM_APPLICATION_ID}&app_key=${process.env.REACT_APP_EDAMAM_APPLICATION_KEY}`,
+		headers: { 'content-type': 'application/json' },
+		data,
+	};
 
-	const nutritionalInfo = await fetch(
-		`https://api.edamam.com/api/nutrition-details?app_id=${applicationID}&app_key=${applicationKey}`,
-		{
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body,
-		}
-	)
-		.then((res) => res.json())
-		.then((json) => console.log(json))
+	let nutritionalInfo = await axios(options)
+		.then((response) => response.data)
 		.catch((err) => console.error(err));
 
-	data = nutritionalInfo;
-	return res.status(200).json({
-		status: 200,
-		message: 'success!',
-	});
+	if (nutritionalInfo) {
+		return res.status(200).json({ status: 200, data: nutritionalInfo });
+	}
 };
 
 module.exports = {
-	getNutritionalInfo,
 	postNutritionalInfo,
 };
