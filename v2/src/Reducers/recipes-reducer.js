@@ -4,7 +4,7 @@ const initialState = {
 	error: null,
 };
 
-export default recipesReducer = (state = initialState, action) => {
+export default function recipesReducer(state = initialState, action) {
 	switch (action.type) {
 		case 'REQUEST_RECIPE_DETAILS': {
 			return {
@@ -32,4 +32,4 @@ export default recipesReducer = (state = initialState, action) => {
 			return state;
 		}
 	}
-};
+}

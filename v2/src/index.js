@@ -6,6 +6,8 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './Contexts/AuthContext';
 
+import configureStore from './store';
+
 import App from './Components/App';
 
 const store = configureStore();

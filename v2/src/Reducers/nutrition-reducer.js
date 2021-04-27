@@ -4,7 +4,7 @@ const initialState = {
 	error: null,
 };
 
-export default recipesReducer = (state = initialState, action) => {
+export default function nutritionReducer(state = initialState, action) {
 	switch (action.type) {
 		case 'REQUEST_NUTRITIONAL_INFORMATION': {
 			//change status to loading
@@ -36,4 +36,4 @@ export default recipesReducer = (state = initialState, action) => {
 			return state;
 		}
 	}
-};
+}
