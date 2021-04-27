@@ -5,10 +5,18 @@ const applicationID = process.env.REACT_APP_EDAMAM_APPLICATION_ID;
 const applicationKey = process.env.REACT_APP_EDAMAM_APPLICATION_KEY;
 
 const postNutritionalInfo = async (req, res) => {
+	//validate req.body
+	if (!req.body.ingr) {
+		return res.status(400).json({
+			status: 400,
+			error: 'Ingredients list was not submitted correctly',
+		});
+	}
+
 	const data = JSON.stringify(req.body);
 	const options = {
 		method: 'POST',
-		url: `https://api.edamam.com/api/nutrition-details?app_id=${process.env.REACT_APP_EDAMAM_APPLICATION_ID}&app_key=${process.env.REACT_APP_EDAMAM_APPLICATION_KEY}`,
+		url: `https://api.edamam.com/api/nutrition-details?app_id=${applicationID}&app_key=${applicationKey}`,
 		headers: { 'content-type': 'application/json' },
 		data,
 	};
