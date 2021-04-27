@@ -11,6 +11,7 @@ import RecipeDetails from './RecipeDetails';
 
 const App = () => {
 	const { user } = useAuth();
+
 	return (
 		<>
 			<GlobalStyles />
