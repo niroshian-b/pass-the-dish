@@ -3,12 +3,18 @@ import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
 import { db } from '../../firebase';
+import { useDispatch, useSelector } from 'react-redux';
+
+import {
+	recieveRecipeDetails,
+	errorRecieveRecipeDetails,
+	receiveNutritionInformation,
+	errorReceiveNutritionInformation,
+} from '../../actions';
 
 const RecipeDetails = () => {
+	const dispatch = useDispatch();
 	const { id } = useParams();
-	const [recipeDetails, setRecipeDetails] = useState(null);
-	const [nutritionalInfo, setNutritionalInfo] = useState(null);
-	const [loading, setLoading] = useState(false);
 
 	const getRecipeDetails = async () => {
 		return db
@@ -16,8 +22,12 @@ const RecipeDetails = () => {
 			.doc(id)
 			.get()
 			.then((doc) => {
-				setRecipeDetails(doc.data());
-				setLoading(true);
+				const data = doc.data();
+				dispatch(recieveRecipeDetails(id, data));
+			})
+			.catch((err) => {
+				console.error(err);
+				dispatch(errorRecieveRecipeDetails());
 			});
 	};
 
@@ -43,13 +53,23 @@ const RecipeDetails = () => {
 			},
 		})
 			.then((response) => response.json())
-			.then((nutritonalData) => console.log(nutritonalData.data))
-			.catch((err) => console.error(err));
+			.then((nutritonalData) => {
+				const nutrition = nutritonalData.data;
+				dispatch(receiveNutritionInformation(id, nutrition));
+			})
+			.catch((err) => {
+				console.error(err);
+				dispatch(errorReceiveNutritionInformation());
+			});
 	};
 
 	useEffect(() => {
 		getRecipeDetails();
 	}, []);
+
+	const recipeDetails = useSelector((state) => {
+		return state.recipes.currentRecipe;
+	});
 
 	useEffect(() => {
 		if (recipeDetails) {
@@ -57,14 +77,20 @@ const RecipeDetails = () => {
 		}
 	}, [recipeDetails]);
 
+	const nutritionalInfo = useSelector((state) => {
+		return state.nutrition[id];
+	});
+
+	console.log(recipeDetails);
 	console.log(nutritionalInfo);
+
 	return (
 		<>
 			<Helmet>
 				<script src="https://developer.edamam.com/attribution/badge.js"></script>
 			</Helmet>
 			<Wrapper>
-				{loading ? (
+				{recipeDetails ? (
 					<Recipe>
 						<RecipeCaption>{recipeDetails.caption}</RecipeCaption>
 						<RecipeAuthor>{`Submitted by ${recipeDetails.username}`}</RecipeAuthor>
@@ -131,15 +157,20 @@ const RecipeImage = styled.img`
 	margin: 10px auto;
 `;
 
-const NutritionSummary = styled.div``;
+const NutritionSummary = styled.div`
+	display: flex;
+	justify-content: space-between;
+`;
 
 const HealthTag = styled.div`
 	background-color: black;
 	color: white;
+	padding: 5px;
+	border-radius: 8px;
 `;
 
 const Calories = styled(HealthTag)``;
-const Servings = styled(HealthTag);
+const Servings = styled(HealthTag)``;
 
 const RecipeIngredients = styled.ul`
 	font-size: 20px;

@@ -1,22 +1,14 @@
 const initialState = {
-	currentRecipes: null,
-	status: 'loading',
-	error: null,
+	currentRecipe: null,
 };
 
 export default function recipesReducer(state = initialState, action) {
 	switch (action.type) {
-		case 'REQUEST_RECIPE_DETAILS': {
-			return {
-				...state,
-				status: 'loading',
-			};
-		}
-
 		case 'RECIEVE_RECIPE_DETAILS': {
 			return {
 				...state,
-				currentRecipes: action.recipes,
+				currentRecipe: action.recipe,
+				[action.id]: action.recipe,
 				status: 'idle',
 			};
 		}
