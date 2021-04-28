@@ -17,9 +17,7 @@ ReactDOM.render(
 		<Provider store={store}>
 			<BrowserRouter>
 				<AuthProvider>
-					<Provider>
-						<App />
-					</Provider>
+					<App />
 				</AuthProvider>
 			</BrowserRouter>
 		</Provider>
