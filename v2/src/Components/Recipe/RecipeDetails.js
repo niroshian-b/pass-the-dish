@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
-import { db } from '../firebase';
+import { db } from '../../firebase';
 
 const RecipeDetails = () => {
 	const { id } = useParams();
@@ -34,7 +34,7 @@ const RecipeDetails = () => {
 			prep,
 		};
 
-		await fetch('http://localhost:4000/nutritionalInfo/', {
+		fetch('http://localhost:4000/nutritionalInfo/', {
 			method: 'POST',
 			body: JSON.stringify(body),
 			headers: {
@@ -43,7 +43,8 @@ const RecipeDetails = () => {
 			},
 		})
 			.then((response) => response.json())
-			.then((data) => console.log(data));
+			.then((nutritonalData) => console.log(nutritonalData.data))
+			.catch((err) => console.error(err));
 	};
 
 	useEffect(() => {
@@ -56,9 +57,7 @@ const RecipeDetails = () => {
 		}
 	}, [recipeDetails]);
 
-	if (nutritionalInfo) {
-		console.log(nutritionalInfo);
-	}
+	console.log(nutritionalInfo);
 	return (
 		<>
 			<Helmet>
@@ -71,6 +70,12 @@ const RecipeDetails = () => {
 						<RecipeAuthor>{`Submitted by ${recipeDetails.username}`}</RecipeAuthor>
 						<RecipeImage src={recipeDetails.imageUrl}></RecipeImage>
 
+						{nutritionalInfo && (
+							<NutritionSummary>
+								<Calories>{`${nutritionalInfo.calories} Calories`}</Calories>
+								<Servings>{`Estimated Servings: ${nutritionalInfo.yield}`}</Servings>
+							</NutritionSummary>
+						)}
 						<RecipeIngredients>
 							<h3>Ingredients</h3>
 							{recipeDetails.ingredients.map((item, index) => (
@@ -125,6 +130,16 @@ const RecipeImage = styled.img`
 	object-fit: contain;
 	margin: 10px auto;
 `;
+
+const NutritionSummary = styled.div``;
+
+const HealthTag = styled.div`
+	background-color: black;
+	color: white;
+`;
+
+const Calories = styled(HealthTag)``;
+const Servings = styled(HealthTag);
 
 const RecipeIngredients = styled.ul`
 	font-size: 20px;

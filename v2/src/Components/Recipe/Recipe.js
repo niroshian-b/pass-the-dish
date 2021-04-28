@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+
 const Recipe = ({ recipe, setRecipe }) => {
 	const handleInputChange = (e, index) => {
 		const step = e.target.value;

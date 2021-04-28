@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import firebase from 'firebase';
 import { useHistory } from 'react-router-dom';
 import { Button } from '@material-ui/core';
-import { storage, db } from '../firebase';
-import { useAuth } from '../Contexts/AuthContext';
+import { storage, db } from '../../firebase';
+import { useAuth } from '../../Contexts/AuthContext';
 import Ingredients from './Ingredients';
 import Recipe from './Recipe';
 
