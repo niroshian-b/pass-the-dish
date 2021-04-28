@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { auth } from '../firebase';
+import { useHistory } from 'react-router-dom';
 export const AuthContext = createContext();
 
 export const useAuth = () => {
@@ -13,6 +14,8 @@ export const AuthProvider = ({ children }) => {
 	const [user, setUser] = useState(null);
 	const [openLogin, setOpenLogin] = useState(false);
 	const [openRegister, setOpenRegister] = useState(false);
+
+	const history = useHistory();
 
 	useEffect(() => {
 		const unsubscribe = auth.onAuthStateChanged((authUser) => {
@@ -44,7 +47,7 @@ export const AuthProvider = ({ children }) => {
 	};
 
 	const handleSignOut = () => {
-		return auth.signOut();
+		return auth.signOut().then(() => history.push('/'));
 	};
 
 	const handleSignIn = (e) => {

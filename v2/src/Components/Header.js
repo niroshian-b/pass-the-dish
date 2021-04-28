@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { GiKnifeFork } from 'react-icons/gi';
 import { Avatar as avatar, Button, withStyles } from '@material-ui/core';
@@ -35,11 +35,13 @@ const Header = () => {
 				<UserInfo>
 					{user ? (
 						<>
-							<Avatar
-								alt={user.displayName}
-								src={user.photoURL}
-							></Avatar>
-							<DisplayName>{user.displayName}</DisplayName>
+							<User onClick={() => history.push('/editUser')}>
+								<Avatar
+									alt={user.displayName}
+									src={user.photoURL}
+								></Avatar>
+								<DisplayName>{user.displayName}</DisplayName>
+							</User>
 							<Button onClick={handleSignOut}>Logout</Button>
 						</>
 					) : (
@@ -59,6 +61,13 @@ const Header = () => {
 		</>
 	);
 };
+
+const textGlow = keyframes`
+	from {
+
+	}
+	to {}
+`;
 
 const HeaderWrapper = styled.div`
 	position: sticky;
@@ -85,6 +94,15 @@ const HeaderLogo = styled.div`
 const UserInfo = styled.div`
 	display: flex;
 	align-items: center;
+`;
+
+const User = styled.div`
+	display: flex;
+	align-items: center;
+
+	&:hover {
+		cursor: pointer;
+	}
 `;
 
 const PostButton = styled(Button)`
