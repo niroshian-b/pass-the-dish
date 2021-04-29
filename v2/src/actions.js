@@ -1,19 +1,16 @@
-export const recieveRecipeDetails = (id, recipe) => ({
-	type: 'RECIEVE_RECIPE_DETAILS',
+export const setAllRecipeDetails = (recipes) => ({
+	type: 'SET_ALL_RECIPE_DETAILS',
+	recipes,
+});
+
+export const setRecipeDetails = (id, recipe) => ({
+	type: 'SET_RECIPE_DETAILS',
 	id,
 	recipe,
 });
 
-export const errorRecieveRecipeDetails = () => ({
-	type: 'ERROR_RECIEVE_RECIPE_DETAILS',
-});
-
-export const receiveNutritionInformation = (id, nutrition) => ({
-	type: 'RECEIVE_NUTRITIONAL_INFORMATION',
+export const setNutritionInformation = (id, nutrition) => ({
+	type: 'SET_NUTRITIONAL_INFORMATION',
 	id,
 	nutrition,
-});
-
-export const errorReceiveNutritionInformation = () => ({
-	type: 'ERROR_RECEIVE_NUTRITIONAL_INFORMATION',
 });

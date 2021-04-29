@@ -2,87 +2,20 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
-import { db } from '../../firebase';
-import { useDispatch, useSelector } from 'react-redux';
-
-import {
-	recieveRecipeDetails,
-	errorRecieveRecipeDetails,
-	receiveNutritionInformation,
-	errorReceiveNutritionInformation,
-} from '../../actions';
+import { useSelector } from 'react-redux';
 
 const RecipeDetails = () => {
-	const dispatch = useDispatch();
 	const { id } = useParams();
 
-	const getRecipeDetails = async () => {
-		return db
-			.collection('posts')
-			.doc(id)
-			.get()
-			.then((doc) => {
-				const data = doc.data();
-				dispatch(recieveRecipeDetails(id, data));
-			})
-			.catch((err) => {
-				console.error(err);
-				dispatch(errorRecieveRecipeDetails());
-			});
-	};
-
-	const getNutritionalInfo = async () => {
-		const ingr = recipeDetails.ingredients.map(
-			(item) => `${item.qty} ${item.measurement} ${item.name}`
-		);
-		let prep;
-		recipeDetails.recipe.forEach((step) => (prep += step));
-
-		const body = {
-			title: recipeDetails.caption,
-			ingr,
-			prep,
-		};
-
-		fetch('http://localhost:4000/nutritionalInfo/', {
-			method: 'POST',
-			body: JSON.stringify(body),
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			},
-		})
-			.then((response) => response.json())
-			.then((nutritonalData) => {
-				const nutrition = nutritonalData.data;
-				dispatch(receiveNutritionInformation(id, nutrition));
-			})
-			.catch((err) => {
-				console.error(err);
-				dispatch(errorReceiveNutritionInformation());
-			});
-	};
-
-	useEffect(() => {
-		getRecipeDetails();
-	}, []);
-
 	const recipeDetails = useSelector((state) => {
-		return state.recipes.currentRecipe;
-	});
+		const postObj = state.recipes.find((recipe) => recipe.id === id);
 
-	useEffect(() => {
-		if (recipeDetails) {
-			getNutritionalInfo();
-		}
-	}, [recipeDetails]);
+		return postObj.post;
+	});
 
 	const nutritionalInfo = useSelector((state) => {
 		return state.nutrition[id];
 	});
-
-	console.log(recipeDetails);
-	console.log(nutritionalInfo);
 
 	return (
 		<>
