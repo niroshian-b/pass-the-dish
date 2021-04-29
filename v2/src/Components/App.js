@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { db } from '../firebase';
 
 import Header from './Header';
-import Landing from './Landing';
+import HomeFeed from './HomeFeed';
 import AddRecipe from './Recipe/AddRecipe';
 import EditUser from './EditUser';
 import ErrorPage from './Error';
@@ -84,7 +84,7 @@ const App = () => {
 			<Header />
 			<Switch>
 				<Route exact path="/">
-					<Landing posts={posts} />
+					<HomeFeed posts={posts} />
 				</Route>
 				<Route path="/recipeDetails/:id" component={RecipeDetails} />
 				{user && (

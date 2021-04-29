@@ -20,7 +20,6 @@ export const AuthProvider = ({ children }) => {
 	useEffect(() => {
 		const unsubscribe = auth.onAuthStateChanged((authUser) => {
 			if (authUser) {
-				console.log(authUser);
 				setUser(authUser);
 				if (!authUser.displayName) {
 					return authUser.updateProfile({ displayName: username });

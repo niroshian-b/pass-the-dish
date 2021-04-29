@@ -53,6 +53,10 @@ function Post({ postId, user, username, imageUrl, caption }) {
 					src="../../public/images/default-avatar-profile-icon.png"
 				/>
 				<h3>{username}</h3>
+
+				{user && user.displayName === username && (
+					<EditButton>Edit</EditButton>
+				)}
 			</PostHeader>
 
 			<PostImage
@@ -172,7 +176,14 @@ const Button = styled.button`
 	flex: 0;
 	border: none;
 	color: #6082a3;
-	padding: 10px;
+	padding: 10px 20px;
+
+	&:hover {
+		background-color: lightgray;
+	}
+`;
+const EditButton = styled(Button)`
+	margin-left: auto;
 `;
 
 export default Post;

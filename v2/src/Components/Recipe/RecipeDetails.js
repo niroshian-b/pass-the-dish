@@ -8,15 +8,14 @@ const RecipeDetails = () => {
 	const { id } = useParams();
 
 	const recipeDetails = useSelector((state) => {
-		const postObj = state.recipes.find((recipe) => recipe.id === id);
-
-		return postObj.post;
+		return state.recipes.find((recipe) => recipe.id === id);
 	});
 
 	const nutritionalInfo = useSelector((state) => {
 		return state.nutrition[id];
 	});
 
+	console.log(recipeDetails);
 	return (
 		<>
 			<Helmet>
@@ -25,9 +24,13 @@ const RecipeDetails = () => {
 			<Wrapper>
 				{recipeDetails ? (
 					<Recipe>
-						<RecipeCaption>{recipeDetails.caption}</RecipeCaption>
-						<RecipeAuthor>{`Submitted by ${recipeDetails.username}`}</RecipeAuthor>
-						<RecipeImage src={recipeDetails.imageUrl}></RecipeImage>
+						<RecipeCaption>
+							{recipeDetails.post.caption}
+						</RecipeCaption>
+						<RecipeAuthor>{`Submitted by ${recipeDetails.post.username}`}</RecipeAuthor>
+						<RecipeImage
+							src={recipeDetails.post.imageUrl}
+						></RecipeImage>
 
 						{nutritionalInfo && (
 							<NutritionSummary>
@@ -37,16 +40,18 @@ const RecipeDetails = () => {
 						)}
 						<RecipeIngredients>
 							<h3>Ingredients</h3>
-							{recipeDetails.ingredients.map((item, index) => (
-								<RecipeItem
-									key={index}
-								>{`${item.qty} ${item.measurement} ${item.name}`}</RecipeItem>
-							))}
+							{recipeDetails.post.ingredients.map(
+								(item, index) => (
+									<RecipeItem
+										key={index}
+									>{`${item.qty} ${item.measurement} ${item.name}`}</RecipeItem>
+								)
+							)}
 						</RecipeIngredients>
 
 						<RecipeDirections>
 							<h3>Directions</h3>
-							{recipeDetails.recipe.map((step, index) => (
+							{recipeDetails.post.recipe.map((step, index) => (
 								<RecipeStep key={index}>
 									<Num>{`☑ Step ${index + 1} `}</Num>
 									<Step>{step}</Step>
