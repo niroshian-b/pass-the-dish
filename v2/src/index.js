@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 
 import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './Contexts/AuthContext';
+import { StylesProvider } from '@material-ui/core/styles';
 
 import configureStore from './store';
 
@@ -17,7 +18,9 @@ ReactDOM.render(
 		<Provider store={store}>
 			<BrowserRouter>
 				<AuthProvider>
-					<App />
+					<StylesProvider injectFirst>
+						<App />
+					</StylesProvider>
 				</AuthProvider>
 			</BrowserRouter>
 		</Provider>

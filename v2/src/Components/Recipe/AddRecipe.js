@@ -21,7 +21,10 @@ const AddRecipe = () => {
 
 	const handleChange = (e) => {
 		if (e.target.files[0]) {
-			setImage(e.target.files[0]);
+			//check if the file is an image file
+			if (e.target.files[0]['type'].split('/')[0] === 'image') {
+				setImage(e.target.files[0]);
+			}
 		}
 	};
 
