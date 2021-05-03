@@ -46,7 +46,13 @@ export const AuthProvider = ({ children }) => {
 	};
 
 	const handleSignOut = () => {
-		return auth.signOut().then(() => history.push('/'));
+		return auth.signOut().then(() => {
+			setUser(null);
+			setPassword('');
+			setEmail('');
+			setUsername('');
+			return history.push('/');
+		});
 	};
 
 	const handleSignIn = (e) => {
@@ -61,6 +67,10 @@ export const AuthProvider = ({ children }) => {
 		e.preventDefault();
 
 		return auth.sendPasswordResetEmail(email);
+	};
+
+	const handleUpdatePersonalization = (e) => {
+		e.preventDefault();
 	};
 
 	return (
