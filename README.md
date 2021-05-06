@@ -1,1 +1,1 @@
-# PassTheDish - A social network encompassing food
+# PassTheDishes - A social network encompassing food
