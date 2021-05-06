@@ -7,7 +7,7 @@ This web application uses React.js, Redux, Express, Node.js, and Firebase.
 The node server communicates with the Edamam API to provide nutritional information. Link to the API can be found below.
 https://developer.edamam.com/edamam-nutrition-api
 
-![PassTheDishesDemo.mp4](./assets/PassTheDishesDemo.mp4)
+https://user-images.githubusercontent.com/44169593/117258178-ad037600-ae1a-11eb-9e55-db1c723d9c20.mp4
 
 ## Recipe Details
 
