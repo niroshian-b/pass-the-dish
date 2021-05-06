@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { auth } from '../firebase';
+import firebase from 'firebase';
+import { auth, db } from '../firebase';
 import { useHistory } from 'react-router-dom';
 export const AuthContext = createContext();
 
@@ -20,7 +21,7 @@ export const AuthProvider = ({ children }) => {
 	useEffect(() => {
 		const unsubscribe = auth.onAuthStateChanged((authUser) => {
 			if (authUser) {
-				setUser(authUser);
+				setUser(auth.currentUser);
 				if (!authUser.displayName) {
 					return authUser.updateProfile({ displayName: username });
 				}
@@ -39,6 +40,13 @@ export const AuthProvider = ({ children }) => {
 
 		auth.createUserWithEmailAndPassword(email, password)
 			.then((authUser) => {
+				db.collection('users').doc(authUser.user.uid).set({
+					timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+					displayName: username,
+					email: authUser.user.email,
+					photoURL: authUser.user.photoURL,
+					emailVerified: authUser.user.emailVerified,
+				});
 				return authUser.updateProfile({ displayName: username });
 			})
 			.then((updatedUser) => setUser(updatedUser))
@@ -69,9 +77,22 @@ export const AuthProvider = ({ children }) => {
 		return auth.sendPasswordResetEmail(email);
 	};
 
-	const handleUpdatePersonalization = (e) => {
-		e.preventDefault();
+	const handleUsernameChange = (newUsername) => {};
+
+	const handleDisplayPictureChange = (photoURL) => {
+		return user
+			.updateProfile({ photoURL })
+			.then(() => {
+				console.log('success');
+			})
+			.catch((err) => console.error(err));
 	};
+
+	const handleEmailChange = (email) => {};
+
+	const handlePasswordChange = (password) => {};
+
+	const handleReauthentication = () => {};
 
 	return (
 		<AuthContext.Provider
@@ -91,6 +112,11 @@ export const AuthProvider = ({ children }) => {
 				setOpenLogin,
 				openRegister,
 				setOpenRegister,
+				handleUsernameChange,
+				handleDisplayPictureChange,
+				handleEmailChange,
+				handlePasswordChange,
+				handleReauthentication,
 			}}
 		>
 			{children}

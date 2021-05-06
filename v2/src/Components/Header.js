@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { GiKnifeFork } from 'react-icons/gi';
 import { Avatar as avatar, Button, withStyles } from '@material-ui/core';
@@ -62,13 +62,6 @@ const Header = () => {
 	);
 };
 
-const textGlow = keyframes`
-	from {
-
-	}
-	to {}
-`;
-
 const HeaderWrapper = styled.div`
 	position: sticky;
 	top: 0;
@@ -77,8 +70,8 @@ const HeaderWrapper = styled.div`
 	justify-content: space-between;
 	object-fit: contain;
 	padding: 20px;
-	background-color: white;
-	border-bottom: 1px solid lightgray;
+	background-color: #ffdd00;
+	border-bottom: 1px solid black;
 	z-index: 1;
 `;
 
@@ -108,9 +101,15 @@ const User = styled.div`
 const PostButton = styled(Button)`
 	width: 100%;
 	max-width: 300px;
+
+	&:hover {
+		font-weight: bold;
+	}
 `;
 
-const Avatar = withStyles({ root: { 'margin-right': '10px' } })(avatar);
+const Avatar = withStyles({ root: { 'margin-right': '10px', color: 'black' } })(
+	avatar
+);
 
 const DisplayName = styled.h2`
 	margin-right: 20px;

@@ -108,7 +108,7 @@ const Wrapper = styled.div`
 	width: 60%;
 	padding: 10px;
 	margin: 10px auto;
-	background-color: white;
+	background-color: #ffdd00;
 `;
 
 const Progress = styled.progress`

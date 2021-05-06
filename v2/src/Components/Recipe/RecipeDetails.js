@@ -15,7 +15,7 @@ const RecipeDetails = () => {
 		return state.nutrition[id];
 	});
 
-	console.log(recipeDetails);
+	console.log(nutritionalInfo);
 	return (
 		<>
 			<Helmet>
@@ -33,10 +33,25 @@ const RecipeDetails = () => {
 						></RecipeImage>
 
 						{nutritionalInfo && (
-							<NutritionSummary>
-								<Calories>{`${nutritionalInfo.calories} Calories`}</Calories>
-								<Servings>{`Estimated Servings: ${nutritionalInfo.yield}`}</Servings>
-							</NutritionSummary>
+							<>
+								<NutritionSummary>
+									<Calories>{`${Math.round(
+										nutritionalInfo.calories /
+											nutritionalInfo.yield
+									)} Calories per Serving!`}</Calories>
+									<Servings>{`Estimated Servings: ${nutritionalInfo.yield}`}</Servings>
+								</NutritionSummary>
+								<h3>Health Labels</h3>
+								<NutritionTags>
+									{nutritionalInfo.healthLabels.map(
+										(label, index) => (
+											<HealthTag key={index}>
+												{label.replace(/_/g, ' ')}
+											</HealthTag>
+										)
+									)}
+								</NutritionTags>
+							</>
 						)}
 						<RecipeIngredients>
 							<h3>Ingredients</h3>
@@ -74,12 +89,9 @@ const Wrapper = styled.div`
 	background-color: var(--background-color);
 `;
 const Recipe = styled.div`
-	max-width: 700px;
+	max-width: 900px;
 	padding: 40px 20px;
-	background-color: white;
-
-	border: 1px solid lightgray;
-	border-top: none;
+	background-color: #ffdd00;
 `;
 const RecipeCaption = styled.h2`
 	text-align: center;
@@ -100,10 +112,16 @@ const NutritionSummary = styled.div`
 	justify-content: space-between;
 `;
 
+const NutritionTags = styled.div`
+	display: flex;
+	flex-wrap: wrap;
+`;
+
 const HealthTag = styled.div`
 	background-color: black;
 	color: white;
 	padding: 5px;
+	margin: 5px;
 	border-radius: 8px;
 `;
 

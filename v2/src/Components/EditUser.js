@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 import { useAuth } from '../Contexts/AuthContext';
+import { storage } from '../firebase';
 
 const EditUser = () => {
-	const { username, email, user } = useAuth();
-	const [newImg, setNewImg] = useState(null);
+	const history = useHistory();
+	const { user, handleDisplayPictureChange } = useAuth();
+	const [photoURL, setPhotoURL] = useState(null);
 	const [newUsername, setNewUsername] = useState(null);
 	const [newEmail, setNewEmail] = useState(null);
 	const [newPassword, setNewPassword] = useState(null);
 	const [newPasswordConfirm, setNewPasswordConfirm] = useState(null);
+	const [progress, setProgress] = useState(0);
 	const [err, setErr] = useState(null);
 
 	const handleChange = (e) => {
@@ -17,7 +21,7 @@ const EditUser = () => {
 			//check if the file is an image file
 			if (e.target.files[0]['type'].split('/')[0] === 'image') {
 				//if it is set the new image to the image
-				setNewImg(e.target.files[0]);
+				handleDisplayPictureUpload(e.target.files[0]);
 				setErr(null);
 			} else {
 				//if it is not display an error message
@@ -26,30 +30,79 @@ const EditUser = () => {
 		}
 	};
 
-	const handleEditSubmission = () => {
-		//will change user information based on which inputs are filled
-	};
+	const handleDisplayPictureUpload = (newImg) => {
+		//Start to Upload the image
+		const uploadImage = storage.ref(`images/${newImg.name}`).put(newImg);
 
-	console.log(newImg);
+		//Update the progress bar
+		uploadImage.on(
+			'state_changed',
+			(snapshot) => {
+				const uploadedAmount = Math.round(
+					(snapshot.bytesTrasferred / snapshot.totalBytes) * 100
+				);
+				setProgress(uploadedAmount);
+			},
+			(error) => {
+				//Upload Failed
+				console.log(error);
+			},
+			() => {
+				//Upload Success!
+				storage
+					.ref('images')
+					.child(newImg.name)
+					.getDownloadURL()
+					.then((url) => {
+						setPhotoURL(url);
+						setProgress(100);
+					});
+			}
+		);
+	};
+	const handleEditSubmission = async (e) => {
+		e.preventDefault();
+		//will change user information based on which inputs are filled
+		if (newUsername !== user.displayName) {
+			console.log('username changed');
+		}
+		if (newEmail !== user.email) {
+			console.log('new email entered');
+		}
+		if (newPassword || newPasswordConfirm) {
+			if (newPassword !== newPasswordConfirm) {
+				setErr(
+					'Please make sure both your password and confirmation matches'
+				);
+			} else {
+				console.log('new password added');
+			}
+		}
+		if (photoURL !== user.photoURL) {
+			console.log('display picture changed', photoURL);
+			handleDisplayPictureChange(photoURL);
+		}
+	};
 
 	useEffect(() => {
 		//when the edit user component is loaded, it should check if the user is logged in and then set the newData states to the user's existing data for comparison later
 		if (user) {
-			setNewUsername(username);
-			setNewEmail(email);
-			//password is not included for security and will require seperate reauthentaction later with email
+			setNewUsername(user.displayName);
+			setNewEmail(user.email);
+			//password is not included for security and will require seperate reauthentaction
 		}
 	}, [user]);
 
 	return (
 		<Wrapper>
-			<Form onSubmit={handleEditSubmission}>
+			<Form>
 				{err && <Error>{`Error: ${err}`}</Error>}
 				<h1>Edit User Profile</h1>
 				<Personalization>
 					<h2>Personalization</h2>
-					{newImg && <img></img>}
+					{photoURL && <DPPreview src={photoURL} />}
 					<Label>Display Picture</Label>
+					{progress < 100 && <Progress value={progress} max="100" />}
 					<input type="file" onChange={handleChange} />
 					<Label>Display Name</Label>
 					<Input
@@ -67,7 +120,11 @@ const EditUser = () => {
 						onChange={(e) => setNewEmail(e.target.value)}
 					/>
 					<Label>New Password</Label>
-					<Input type="password" placeholder="Enter a new password" />
+					<Input
+						type="password"
+						placeholder="Enter a new password"
+						onChange={(e) => setNewPassword(e.target.value)}
+					/>
 					<Input
 						type="password"
 						placeholder="Confirm the new password"
@@ -75,7 +132,12 @@ const EditUser = () => {
 					/>
 				</Auth>
 				<SubmitContainer>
-					<SubmitButton type="submit" disabled={err}>
+					<SubmitButton
+						onClick={(e) => {
+							setErr(null);
+							handleEditSubmission(e);
+						}}
+					>
 						Submit
 					</SubmitButton>
 				</SubmitContainer>
@@ -91,13 +153,17 @@ const Wrapper = styled.div`
 	height: calc(100vh - 85px);
 `;
 
+const Progress = styled.progress`
+	width: 100%;
+`;
+
 const Form = styled.form`
 	min-width: 300px;
 	width: 500px;
 	padding: 40px 20px;
-	background-color: white;
+	background-color: #ffdd00;
 
-	border: 1px solid lightgray;
+	border: 1px solid black;
 	border-top: none;
 `;
 
@@ -111,6 +177,19 @@ const FormSection = styled.div`
 	display: flex;
 	flex-direction: column;
 	padding: 20px 0;
+`;
+
+const DPPreview = styled.img`
+	width: 40px;
+	height: 40px;
+
+	border-radius: 50%;
+
+	display: flex;
+	overflow: hidden;
+	align-items: center;
+	flex-shrink: 0;
+	justify-content: center;
 `;
 
 const Auth = styled(FormSection)``;

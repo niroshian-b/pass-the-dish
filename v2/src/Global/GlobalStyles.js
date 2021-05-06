@@ -7,7 +7,7 @@ export default createGlobalStyle`
       --body-font: 'Raleway', sans-serif;
       --max-page-width: 1200px;
       --page-padding: 20px;
-      --background-color: #F9F6F6;
+      --background-color: #FFDD00;
     }
 html, body, div, span, applet, object, iframe,
   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -31,6 +31,7 @@ html, body, div, span, applet, object, iframe,
   body{
     scroll-behavior: smooth;
     position:relative; //to fix sticky header and footer positions 
+    background-color: var(--background-color);
   }
 
 /* GLOBAL STYLES */

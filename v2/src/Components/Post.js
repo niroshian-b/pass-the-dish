@@ -113,13 +113,14 @@ function Post({ postId, user, username, imageUrl, caption }) {
 
 const Wrapper = styled.div`
 	max-width: 500px;
-	background-color: white;
-	border: 1px solid lightgray;
+	background-color: #ffdd00;
+	border: 5px solid black;
 	margin-bottom: 20px;
 `;
 
 const Avatar = styled(avatar)`
 	margin-right: 10px;
+	color: black;
 `;
 
 const PostHeader = styled.div`
@@ -131,8 +132,8 @@ const PostHeader = styled.div`
 const PostImage = styled.img`
 	width: 100%;
 	object-fit: contain;
-	border-top: 1px solid lightgray;
-	border-bottom: 1px solid lightgray;
+	border-top: 3px solid black;
+	border-bottom: 3px solid black;
 
 	&:hover {
 		cursor: pointer;
@@ -141,7 +142,7 @@ const PostImage = styled.img`
 
 const PostCaption = styled.div`
 	padding: 10px 20px;
-	border-bottom: 1px solid lightgray;
+	border-bottom: 1px solid black;
 `;
 
 const Caption = styled.p`
@@ -175,11 +176,12 @@ const Input = styled.input`
 const Button = styled.button`
 	flex: 0;
 	border: none;
-	color: #6082a3;
+	color: black;
 	padding: 10px 20px;
 
 	&:hover {
-		background-color: lightgray;
+		background-color: black;
+		color: white;
 	}
 `;
 const EditButton = styled(Button)`
